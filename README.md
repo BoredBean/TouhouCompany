@@ -1,20 +1,24 @@
 # SekibankiSpringMan
-This mod replace the model of SpringMan/CoilHead to the Touhou character Sekibanki.
+This mod replaces the model of SpringMan/CoilHead with the Touhou character Sekibanki.
 
-The spring/coil on a body, which is killed by the SpringMan/CoilHead will be replaced with a head of Sekibanki. This is configurable.
+The SpringMan/CoilHead will replace the spring/coil on a player's body with a head of Sekibanki, which can be configured.
+
+[A Demo Video](https://b23.tv/xLxAHkV)
+
+![A Demo Picture](https://github.com/BoredBean/SekibankiSpringMan/assets/18239170/86b01256-68df-4710-8fa5-a4c54395c02a)
 
 ## Issues
 
-There are plenty of issues with the model,  but I don't have the specific knowledge to fix it.
+Plenty of.
 
-This is mainly related to Blender and Unity.
+The Blender and Unity related issues with the models are beyond my knowledge.
 
-I would be grateful if someone could help.
+I would appreciate it if someone could help.
 
 ## Credits
 
 Most of the code references [FNaFEndoCoilhead](https://thunderstore.io/c/lethal-company/p/OrtonLongGaming/FNaFEndoCoilhead/) by OrtonLongGaming.
 
-Special thanks to TShine for sharing his experience and patiently answering my questions. His great work: [ChineseBrideAndNewYearGhostgirl](https://thunderstore.io/c/lethal-company/p/TShine/ChineseBrideAndNewYearGhostgirl/)
+Special thanks to TShine for generously sharing their experience and taking the time to answer my questions patiently. His great work: [ChineseBrideAndNewYearGhostgirl](https://thunderstore.io/c/lethal-company/p/TShine/ChineseBrideAndNewYearGhostgirl/)
 
 The model of Sekibanki is made by Tenkoro: [Sekibanki (Tenkoro)](https://mikumikudance.fandom.com/wiki/Sekibanki_(Tenkoro))
