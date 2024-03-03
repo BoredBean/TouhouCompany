@@ -69,3 +69,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /KeishiSpringMan/obj
 /KeishiSpringMan/bin/
+/SekibankiSpringMan/bin/Debug
+/SekibankiSpringMan/obj

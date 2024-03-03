@@ -1,0 +1,8 @@
+{
+    "name": "[Touhou]SekibankiSpringMan(CoilHead)",
+    "version_number": "0.8.0",
+    "website_url": "https://github.com/BoredBean/SekibankiSpringMan",
+    "description": "This mod replace the model of SpringMan/CoilHead to the Touhou character Sekibanki. The spring/coil on a body, which is killed by the SpringMan/CoilHead, will also be replaced with a head of Sekibanki and this is configurable.",
+    "dependencies": [
+    ]
+}
