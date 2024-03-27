@@ -29,11 +29,11 @@ namespace SekibankiSpringMan
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
             try
             {
-                AssetBundle bundle = AssetUtils.LoadAssetBundleFromResources("sekibanki", typeof(SpringManPatch).Assembly);
+                var bundle = AssetUtils.LoadAssetBundleFromResources("sekibanki", typeof(SpringManPatch).Assembly);
                 sekiVisuals = bundle.LoadAsset<GameObject>("Sekibanki.prefab");
                 sekiHeadVisuals = bundle.LoadAsset<GameObject>("SekibankiHead.prefab");
-                Renderer[] componentsInChildren = sekiVisuals.GetComponentsInChildren<Renderer>(true);
-                foreach (Renderer renderer in componentsInChildren)
+                var componentsInChildren = sekiVisuals.GetComponentsInChildren<Renderer>(true);
+                foreach (var renderer in componentsInChildren)
                 {
                     renderer.gameObject.layer = LayerMask.NameToLayer("Enemies");
                 }
@@ -62,21 +62,21 @@ namespace SekibankiSpringMan
             {
                 if (!part.name.Contains("Spring")) continue;
                 var springContainer = part.transform.Find("spine.001/spine.002/spine.003/spine.004/SpringContainer");
-                SkinnedMeshRenderer spring = springContainer.Find("Spring.001").GetComponent<SkinnedMeshRenderer>();
-                Transform springManMetaRig = springContainer.Find("SpringMetarig");
+                var spring = springContainer.Find("Spring.001").GetComponent<SkinnedMeshRenderer>();
+                var springManMetaRig = springContainer.Find("SpringMetarig");
                 if (spring != null) spring.enabled = false;
-                GameObject sekiHeadVisual = Object.Instantiate<GameObject>(Plugin.sekiHeadVisuals);
+                var sekiHeadVisual = Object.Instantiate<GameObject>(Plugin.sekiHeadVisuals);
                 sekiHeadVisual.transform.SetParent(springContainer);
                 sekiHeadVisual.transform.localPosition = Vector3.zero;
                 sekiHeadVisual.transform.localRotation = Quaternion.identity;
                 sekiHeadVisual.transform.localScale = Vector3.one;
-                Transform sekiMesh = sekiHeadVisual.transform.Find("Head/Body");
-                Transform sekiMetarig = sekiHeadVisual.transform.Find("Head/SpringMetarig");
+                var sekiMesh = sekiHeadVisual.transform.Find("Head/Body");
+                var sekiMetarig = sekiHeadVisual.transform.Find("Head/SpringMetarig");
                 sekiMetarig.SetParent(springManMetaRig.parent, true);
                 sekiMetarig.transform.localScale = springManMetaRig.transform.localScale;
                 sekiMetarig.transform.localRotation = springManMetaRig.transform.localRotation;
                 sekiMetarig.transform.localPosition = springManMetaRig.transform.localPosition;
-                SkinnedMeshRenderer component = sekiMesh.GetComponent<SkinnedMeshRenderer>();
+                var component = sekiMesh.GetComponent<SkinnedMeshRenderer>();
                 component.rootBone = sekiMetarig;
                 sekiMetarig.name = "SpringMetarig";
                 Plugin.Instance.AddLog($"Spring model changed");
@@ -89,32 +89,40 @@ namespace SekibankiSpringMan
     {
         private static void Postfix(EnemyAI __instance)
         {
-            if (__instance is SpringManAI && !(Plugin.sekiVisuals == null))
-            {
-                Transform springManModel = __instance.transform.Find("SpringManModel");
-                SkinnedMeshRenderer springManBody = (springManModel?.Find("Body"))?.GetComponent<SkinnedMeshRenderer>();
-                if (springManBody != null) springManBody.enabled = false;
-                MeshRenderer springManHead = (springManModel?.Find("Head"))?.GetComponent<MeshRenderer>();
-                Transform springManMetaRig = springManModel?.Find("AnimContainer").Find("metarig");
-                if (springManMetaRig == null) return;
-                springManMetaRig.name = "old-metarig";
-                if (springManHead != null) springManHead.enabled = false;
-                GameObject sekiVisual = Object.Instantiate<GameObject>(Plugin.sekiVisuals);
-                sekiVisual.transform.SetParent(springManModel);
-                sekiVisual.transform.localPosition = Vector3.zero;
-                sekiVisual.transform.localRotation = Quaternion.identity;
-                sekiVisual.transform.localScale = Vector3.one;
-                Transform sekiMesh = sekiVisual.transform.Find("SekibankiModel/Body");
-                Transform sekiMetarig = sekiVisual.transform.Find("SekibankiModel/metarig");
-                sekiMetarig.SetParent(springManMetaRig.parent, true);
-                sekiMetarig.transform.localScale = springManMetaRig.transform.localScale;
-                sekiMetarig.transform.localRotation = springManMetaRig.transform.localRotation;
-                sekiMetarig.transform.localPosition = springManMetaRig.transform.localPosition;
-                SkinnedMeshRenderer component = sekiMesh.GetComponent<SkinnedMeshRenderer>();
-                component.rootBone = sekiMetarig;
-                sekiMetarig.name = "metarig";
-                Plugin.Instance.AddLog($"SpringMan model changed");
-            }
+            if (__instance is not SpringManAI || Plugin.sekiVisuals == null) return;
+
+            var coilHeadAnimator = __instance.GetComponentInChildren<Animator>();
+            var originalController = coilHeadAnimator.runtimeAnimatorController;
+
+            var springManModel = __instance.transform.Find("SpringManModel");
+            var springManBody = (springManModel?.Find("Body"))?.GetComponent<SkinnedMeshRenderer>();
+            if (springManBody != null) springManBody.enabled = false;
+            var springManHead = (springManModel?.Find("Head"))?.GetComponent<MeshRenderer>();
+            var springManMetaRig = springManModel?.Find("AnimContainer").Find("metarig");
+            if (springManMetaRig == null) return;
+            springManMetaRig.name = "old-metarig";
+            if (springManHead != null) springManHead.enabled = false;
+            var sekiVisual = Object.Instantiate<GameObject>(Plugin.sekiVisuals);
+            sekiVisual.transform.SetParent(springManModel);
+            sekiVisual.transform.localPosition = Vector3.zero;
+            sekiVisual.transform.localRotation = Quaternion.identity;
+            sekiVisual.transform.localScale = Vector3.one;
+            var sekiMesh = sekiVisual.transform.Find("SekibankiModel/Body");
+            var sekiMetarig = sekiVisual.transform.Find("SekibankiModel/metarig");
+            sekiMetarig.SetParent(springManMetaRig.parent, true);
+            sekiMetarig.transform.localScale = springManMetaRig.transform.localScale;
+            sekiMetarig.transform.localRotation = springManMetaRig.transform.localRotation;
+            sekiMetarig.transform.localPosition = springManMetaRig.transform.localPosition;
+            var component = sekiMesh.GetComponent<SkinnedMeshRenderer>();
+            component.rootBone = sekiMetarig;
+            sekiMetarig.name = "metarig";
+
+            Plugin.Instance.AddLog($"SpringMan model changed");
+
+            /* This reset the state of the animator? I have no idea. It just works. */
+            coilHeadAnimator.runtimeAnimatorController = new AnimatorOverrideController(originalController);
+
+            Plugin.Instance.AddLog($"The state of the animator reset");
         }
     }
 }
