@@ -71,3 +71,6 @@ crashlytics-build.properties
 /KeishiSpringMan/bin/
 /SekibankiSpringMan/bin/Debug
 /SekibankiSpringMan/obj
+/TouhouEnemyModels/bin/Debug
+/TouhouEnemyModels/obj
+/Release

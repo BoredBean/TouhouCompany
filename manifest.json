@@ -1,8 +1,8 @@
 {
-    "name": "TouhouSekibankiSpringManCoilHead",
-    "version_number": "0.8.2",
-    "website_url": "https://github.com/BoredBean/SekibankiSpringMan",
-    "description": "This mod replace the model of SpringMan/CoilHead to the Touhou character Sekibanki. The spring/coil on a body, which is killed by the SpringMan/CoilHead, will also be replaced with a head of Sekibanki and this is configurable.",
+    "name": "TouhouEnemyModels",
+    "version_number": "0.9.0",
+    "website_url": "https://github.com/BoredBean/TouhouEnemyModels",
+    "description": "[SekibankiSpringMan] is deprecated and changed to [TouhouEnemyModels]. This mod replace the model of enemies to Touhou characters(modified) and also add their theme music(shortened). All configurable. CoilHead -> Sekibanki. Nutcracker -> Satori Komeiji.",
     "dependencies": [
     ]
 }
