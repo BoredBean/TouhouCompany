@@ -2,7 +2,7 @@
     "name": "TouhouEnemyModels",
     "version_number": "0.9.0",
     "website_url": "https://github.com/BoredBean/TouhouEnemyModels",
-    "description": "[SekibankiSpringMan] is deprecated and changed to [TouhouEnemyModels]. This mod replace the model of enemies to Touhou characters(modified) and also add their theme music(shortened). All configurable. CoilHead -> Sekibanki. Nutcracker -> Satori Komeiji.",
+    "description": "[SekibankiSpringMan] is deprecated and changed to [TouhouEnemyModels]. This mod replaces the model of enemies with Touhou characters(modified) and also adds their theme music(shortened). All configurable. CoilHead -> Sekibanki, Nutcracker -> Satori, ForestGiant -> Suika, RadMech -> Utsuho, ...",
     "dependencies": [
     ]
 }

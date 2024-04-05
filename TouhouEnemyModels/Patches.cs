@@ -7,8 +7,9 @@ namespace TouhouEnemyModels
     [HarmonyPatch]
     internal class Patches
     {
+        #region ModelReplace
         [HarmonyPatch(typeof(DeadBodyInfo), "Start")]
-        internal class BodySpringPatch
+        internal class ReplaceDeadBodySpringModel
         {
             private static void Postfix(DeadBodyInfo __instance)
             {
@@ -42,7 +43,7 @@ namespace TouhouEnemyModels
         }
 
         [HarmonyPatch(typeof(EnemyAI), "Start")]
-        internal class EnemyAIPatch
+        internal class ReplaceEnemyModels
         {
             private static void Prefix(EnemyAI __instance)
             {
@@ -110,9 +111,6 @@ namespace TouhouEnemyModels
                             satoriVisual.transform.localScale = Vector3.one;
                             var satoriMesh = satoriVisual.transform.Find("MeshContainer/LOD0");
                             var satoriMetarig = satoriVisual.transform.Find("MeshContainer/AnimContainer/metarig");
-                            ai.torsoContainer =
-                                satoriVisual.transform.Find("MeshContainer/AnimContainer/metarig/spinecontainer");
-                            ai.gunPoint = satoriVisual.transform.Find("MeshContainer/AnimContainer/metarig/spinecontainer/GunAndArmsContainer/GunPoint/GunPointWithOffset");
                             satoriMetarig.SetParent(nutcrackerMetaRig.parent, true);
                             satoriMetarig.transform.localScale = nutcrackerMetaRig.transform.localScale;
                             satoriMetarig.transform.localRotation = nutcrackerMetaRig.transform.localRotation;
@@ -120,6 +118,9 @@ namespace TouhouEnemyModels
                             var component = satoriMesh.GetComponent<SkinnedMeshRenderer>();
                             component.rootBone = satoriMetarig;
                             satoriMetarig.name = "metarig";
+
+                            ai.torsoContainer = satoriMetarig.transform.Find("spinecontainer");
+                            ai.gunPoint = satoriMetarig.transform.Find("spinecontainer/GunAndArmsContainer/GunPoint/GunPointWithOffset");
 
                             TouhouEnemiesPlugin.Instance.AddLog($"Nutcracker model changed. Torsor: {ai.torsoContainer != null}, GunPoint: {ai.gunPoint != null}");
 
@@ -130,14 +131,60 @@ namespace TouhouEnemyModels
                             TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator reset");
                             break;
                         }
+                    case ForestGiantAI ai when TouhouEnemiesPlugin.suikaVisuals != null &&
+                                                   TouhouEnemiesPlugin.EnableForestGiantReplace.Value:
+                        {
+                            var forestGiantAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = forestGiantAnimator.runtimeAnimatorController;
+
+                            var forestGiantMesh = ai.transform.Find("FGiantModelContainer");
+                            var bodyLod0 = forestGiantMesh?.Find("BodyLOD0")?.GetComponent<SkinnedMeshRenderer>();
+                            var bodyLod1 = forestGiantMesh?.Find("BodyLOD1")?.GetComponent<SkinnedMeshRenderer>();
+                            var bodyLod2 = forestGiantMesh?.Find("BodyLOD2")?.GetComponent<SkinnedMeshRenderer>();
+                            if (bodyLod0 != null) bodyLod0.enabled = false;
+                            if (bodyLod1 != null) bodyLod1.enabled = false;
+                            if (bodyLod2 != null) bodyLod2.enabled = false;
+                            var forestGiantMetaRig = forestGiantMesh?.Find("AnimContainer").Find("metarig");
+                            if (forestGiantMetaRig == null) return;
+                            forestGiantMetaRig.name = "old-metarig";
+                            var suikaVisual = Object.Instantiate(TouhouEnemiesPlugin.suikaVisuals);
+                            suikaVisual.transform.SetParent(forestGiantMesh);
+                            suikaVisual.transform.localPosition = Vector3.zero;
+                            suikaVisual.transform.localRotation = Quaternion.identity;
+                            suikaVisual.transform.localScale = Vector3.one;
+                            var suikaMesh = suikaVisual.transform.Find("FGiantModelContainer/BodyLOD0");
+                            var suikaMetarig = suikaVisual.transform.Find("FGiantModelContainer/metarig");
+                            suikaMetarig.SetParent(forestGiantMetaRig.parent, true);
+                            suikaMetarig.transform.localScale = forestGiantMetaRig.transform.localScale;
+                            suikaMetarig.transform.localRotation = forestGiantMetaRig.transform.localRotation;
+                            suikaMetarig.transform.localPosition = forestGiantMetaRig.transform.localPosition;
+                            var component = suikaMesh.GetComponent<SkinnedMeshRenderer>();
+                            component.rootBone = suikaMetarig;
+                            suikaMetarig.name = "metarig";
+
+                            ai.centerPosition = suikaVisual.transform.Find("FGiantModelContainer/CenterPosition");
+                            ai.handBone = suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R");
+                            ai.holdPlayerPoint = ai.handBone.transform.Find("PlayerPoint");
+
+                            TouhouEnemiesPlugin.Instance.AddLog($"ForestGiant model changed. CenterPos: {ai.centerPosition != null}, HandBone: {ai.handBone != null}, HoldPoint: {ai.holdPlayerPoint != null}");
+
+                            /* This reset the state of the animator? I have no idea. It just works. */
+                            forestGiantAnimator.runtimeAnimatorController =
+                                new AnimatorOverrideController(originalController);
+
+                            TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator reset");
+                            break;
+                        }
                 }
             }
         }
+        #endregion
 
+        #region ThemeReplace
         [HarmonyPatch(typeof(SpringManAI), "SetAnimationGoClientRpc")]
         [HarmonyPostfix]
         [ClientRpc]
-        public static void PlayWalkSounds(SpringManAI __instance)
+        public static void PlaySekibankiTheme(SpringManAI __instance)
         {
             if (!TouhouEnemiesPlugin.EnableCoilHeadReplace.Value || !TouhouEnemiesPlugin.EnableSekibankiTheme.Value ||
                 TouhouEnemiesPlugin.SekibankiTheme == null) return;
@@ -162,22 +209,66 @@ namespace TouhouEnemyModels
         [HarmonyPatch(typeof(SpringManAI), "SetAnimationStopClientRpc")]
         [HarmonyPostfix]
         [ClientRpc]
-        public static void StopWalkSounds(SpringManAI __instance)
+        public static void PauseSekibankiTheme(SpringManAI __instance)
         {
             if (!TouhouEnemiesPlugin.EnableCoilHeadReplace.Value || !TouhouEnemiesPlugin.EnableSekibankiTheme.Value ||
                 TouhouEnemiesPlugin.SekibankiTheme == null || !__instance.creatureSFX.isPlaying) return;
             __instance.creatureSFX.Pause();
-            TouhouEnemiesPlugin.Instance.AddLog($"Stop playing Sekibanki theme.");
+            TouhouEnemiesPlugin.Instance.AddLog($"Pause Sekibanki theme.");
         }
 
         [HarmonyPatch(typeof(NutcrackerEnemyAI), "Start")]
         [HarmonyPostfix]
-        public static void ReplaceAudio(SpringManAI __instance)
+        public static void ReplaceSatoriTheme(NutcrackerEnemyAI __instance)
         {
             if (!TouhouEnemiesPlugin.EnableNutcrackerReplace.Value || !TouhouEnemiesPlugin.EnableSatoriTheme.Value ||
                 TouhouEnemiesPlugin.SatoriTheme == null) return;
             __instance.enemyBehaviourStates[2].VoiceClip = TouhouEnemiesPlugin.SatoriTheme;
             TouhouEnemiesPlugin.Instance.AddLog($"Satori theme Loaded.");
         }
+
+        [HarmonyPatch(typeof(EnemyAI), "SwitchToBehaviourStateOnLocalClient")]
+        [HarmonyPostfix]
+        [ClientRpc]
+        public static void ReplaceSuikaTheme(int stateIndex, EnemyAI __instance)
+        {
+            if (__instance is not ForestGiantAI || !TouhouEnemiesPlugin.EnableForestGiantReplace.Value || !TouhouEnemiesPlugin.EnableSuikaTheme.Value ||
+                TouhouEnemiesPlugin.SuikaTheme == null) return;
+            switch (stateIndex)
+            {
+                case 0:
+                    __instance.creatureSFX.Stop();
+                    TouhouEnemiesPlugin.Instance.AddLog($"Stop Suika theme.");
+                    break;
+                case 1:
+                {
+                    if (__instance.creatureSFX.clip != TouhouEnemiesPlugin.SuikaTheme)
+                    {
+                        __instance.creatureSFX.clip = TouhouEnemiesPlugin.SuikaTheme;
+                        __instance.creatureSFX.volume = 0.5f;
+                        __instance.creatureSFX.loop = true;
+                    }
+                    if (__instance.creatureSFX.isPlaying)
+                    {
+                        __instance.creatureSFX.UnPause();
+                    }
+                    else
+                    {
+                        __instance.creatureSFX.Play();
+                    }
+                    TouhouEnemiesPlugin.Instance.AddLog($"Playing Suika theme.");
+                    WalkieTalkie.TransmitOneShotAudio(__instance.creatureSFX, TouhouEnemiesPlugin.SuikaTheme, 0.3f);
+                    break;
+                }
+                case 2:
+                    __instance.creatureSFX.Pause();
+                    TouhouEnemiesPlugin.Instance.AddLog($"Pause Suika theme.");
+                    break;
+                default:
+                    TouhouEnemiesPlugin.Instance.AddLog($"Unexpected state for Suika theme.");
+                    break;
+            }
+        }
+        #endregion
     }
 }

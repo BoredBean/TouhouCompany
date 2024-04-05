@@ -8,5 +8,7 @@
 [Unexpected Behavior with CoilHeadStare Installed +more](https://github.com/BoredBean/SekibankiSpringMan/issues/2)
 ### Release v0.9.0
 1. Change Nutcracker to a Satori version.
-2. Add theme musics for Touhou characters.
+2. Add theme music for Touhou characters.
 3. Optimized the shader and the texture.
+### Release v0.9.1
+1. Replace ForestGiant to Suika.
