@@ -28,6 +28,9 @@
       <Reference Include="Assembly-CSharp">
         <HintPath>lib\Assembly-CSharp.dll</HintPath>
       </Reference>
+      <Reference Include="Unity.Animation.Rigging">
+        <HintPath>lib\Unity.Animation.Rigging.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.Netcode.Runtime">
         <HintPath>lib\Unity.Netcode.Runtime.dll</HintPath>
       </Reference>

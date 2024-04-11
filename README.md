@@ -1,10 +1,12 @@
 # TouhouEnemyModels
 This mod replaces the model of enemies with **Touhou characters (modified)** and also adds their **theme music (shortened)**.
 * Replaces the model of **SpringMan/CoilHead** to **Sekibanki**.
-* The SpringMan/CoilHead can replace the **spring/coil** on a player's body with **a head of Sekibanki**.
-* Replaces the model of **Nutcracker** to **Satori Komeiji**.
-* Replaces the model of **ForestGiant** to **Suika Ibuki**.
-* Replaces the model of **RadMech** to **Utsuho Reiuji** (working).
+* The SpringMan/CoilHead can replace the **spring/coil** on a player's body with **a head of Sekibanki (赤蛮奇)**.
+* Replaces the model of **Nutcracker** to **Satori Komeiji (古明地觉)**.
+* Replaces the model of **ForestGiant** to **Suika Ibuki (伊吹萃香)**.
+* Replaces the model of **HoarderBug** to **Marisa Kirisame (雾雨魔理沙)**.
+* Replaces the model of **RadMech** to **Utsuho Reiuji (灵乌路空)** (working).
+
 
 [Sekibanki Demo Video](https://b23.tv/xLxAHkV)
 
@@ -30,3 +32,4 @@ Special thanks to TShine for generously sharing their experience and taking the 
 and 左林♂: [小5胡桃夹子](https://t.bilibili.com/880219101680631824)
 * The model of Suika is made by Zakoneko: [Suika Ibuki (Zakoneko)](https://mikumikudance.fandom.com/wiki/Suika_Ibuki_(Zakoneko))
 * The model of Utsuho is made by Zakoneko: [Utsuho Reiuji (Zakoneko)](https://mikumikudance.fandom.com/wiki/Utsuho_Reiuji_(Zakoneko))
+* The model of Marisa is made by Ki: [Marisa Kirisame (Ki)](https://mikumikudance.fandom.com/wiki/Marisa_Kirisame_(Ki))

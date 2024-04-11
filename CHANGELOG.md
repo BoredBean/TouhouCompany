@@ -12,3 +12,8 @@
 3. Optimized the shader and the texture.
 ### Release v0.9.1
 1. Replace ForestGiant to Suika.
+2. Optimized the shader, texture and Model of Sekibanki.
+### Release v0.9.2
+1. Replace HoarderBug to Marisa.
+2. Change the enemies to their normal size.
+3. Fixed Suika theme keep playing. (maybe not fixed)
