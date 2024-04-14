@@ -16,4 +16,4 @@
 ### Release v0.9.2
 1. Replace HoarderBug to Marisa.
 2. Change the enemies to their normal size.
-3. Fixed Suika theme keep playing. (maybe not fixed)
+3. Fixed Suika theme keep playing after dead.

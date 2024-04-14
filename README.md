@@ -8,7 +8,7 @@ This mod replaces the model of enemies with **Touhou characters (modified)** and
 * Replaces the model of **RadMech** to **Utsuho Reiuji (灵乌路空)** (working).
 
 
-[Sekibanki Demo Video](https://b23.tv/xLxAHkV)
+[Demo Video 1](https://www.bilibili.com/video/BV1PM4m1Q7EF)
 
 ![Model Picture](https://github.com/BoredBean/TouhouEnemyModels/assets/18239170/32d32bb0-fa96-43e7-965b-118fc0ea9292)
 
@@ -31,5 +31,5 @@ Special thanks to TShine for generously sharing their experience and taking the 
 * The model of Satori is partly referenced to Futeikei: [Satori Komeiji (Futeikei)](https://mikumikudance.fandom.com/wiki/Satori_Komeiji_(Futeikei))
 and 左林♂: [小5胡桃夹子](https://t.bilibili.com/880219101680631824)
 * The model of Suika is made by Zakoneko: [Suika Ibuki (Zakoneko)](https://mikumikudance.fandom.com/wiki/Suika_Ibuki_(Zakoneko))
-* The model of Utsuho is made by Zakoneko: [Utsuho Reiuji (Zakoneko)](https://mikumikudance.fandom.com/wiki/Utsuho_Reiuji_(Zakoneko))
 * The model of Marisa is made by Ki: [Marisa Kirisame (Ki)](https://mikumikudance.fandom.com/wiki/Marisa_Kirisame_(Ki))
+* The model of Utsuho is made by Zakoneko: [Utsuho Reiuji (Zakoneko)](https://mikumikudance.fandom.com/wiki/Utsuho_Reiuji_(Zakoneko))

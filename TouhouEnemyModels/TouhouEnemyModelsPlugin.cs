@@ -15,7 +15,7 @@ namespace TouhouEnemyModels
     {
         public static TouhouEnemiesPlugin Instance;
 
-        public static AudioClip DeadAudio;
+        public static AudioClip LostAudio;
 
         public static GameObject sekiVisuals;
         public static GameObject sekiHeadVisuals;
@@ -77,7 +77,7 @@ namespace TouhouEnemyModels
             {
                 var bundle =
                     AssetUtils.LoadAssetBundleFromResources("touhouenemies", typeof(TouhouEnemiesPlugin).Assembly);
-                DeadAudio = bundle.LoadAsset<AudioClip>("se_pldead00.mp3");
+                LostAudio = bundle.LoadAsset<AudioClip>("se_pldead00.mp3");
                 var componentsInChildren = new List<Renderer>();
                 if (EnableCoilHeadReplace.Value)
                 {
