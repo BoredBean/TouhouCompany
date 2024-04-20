@@ -2,7 +2,7 @@
   "name": "TouhouEnemyModels",
   "version_number": "0.9.3",
   "website_url": "https://github.com/BoredBean/TouhouCompany",
-  "description": "This mod replaces the model of enemies with Touhou characters(modified) and also adds their theme music(shortened). All configurable. CoilHead -> Sekibanki, Nutcracker -> Satori, ForestGiant -> Suika, HoarderBug -> Marisa, RadMech -> Utsuho...",
+  "description": "怪物的东方人物模型与音效替换。This mod replaces the model of enemies with Touhou characters(modified) and adds their theme music(shortened). CoilSekibanki, NutSatori, SuikaGiant, HoarderMarisa... **暂停更新，除非有合作者或者Issue** **Last version unless get collaborators or issues.**",
    "dependencies": [
         "no00ob-LCSoundTool-1.5.1"
    ]
