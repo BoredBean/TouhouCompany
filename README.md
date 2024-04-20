@@ -3,7 +3,9 @@
 ---
 **长时间的单独开发和稀少的反馈令我倍感孤独，所以我决定暂时停止更新此模组去做些其他事情。如果有人愿意加入或者接手项目，我可以提供开发教程。如果存在使用问题仍然可以提Issue，我会提供有限的维护。如有兴趣可在此项目或B站联系。**
 
-**The long period of solitary development and the scarcity of feedback have made me feel very lonely, so I've decided to stop updating and do something else. I can provide tutorials if anyone wishes to join or take over the project. I will still provide some fixes for the issues. Prefer contact on Github or Steam instead of Discord.**
+**The long period of solitary development and the scarcity of feedback have made me feel very lonely, so I've decided to stop updating and do something else. I can provide tutorials if anyone wishes to join or takes over this project. I will still provide some fixes for the issues. Prefer contact on Github or Steam instead of Discord.**
+
+![PAUSING](https://github.com/BoredBean/TouhouCompany/assets/18239170/f3f9bb06-982e-4d92-b955-31bb574d5b5f)
 ---
 This mod replaces the model of enemies with **Touhou characters (modified)** and also adds their **theme music (shortened)**. 
 
@@ -14,17 +16,18 @@ Original work: **東方Project** by **上海アリス幻樂団**
 * Replaces the model of **Nutcracker** to **Satori Komeiji (古明地觉)**.
 * Replaces the model of **ForestGiant** to **Suika Ibuki (伊吹萃香)**.
 * Replaces the model of **HoarderBug** to **Marisa Kirisame (雾雨魔理沙)**.
-* Replaces the model of **RadMech** to **Utsuho Reiuji (灵乌路空)** (experimental).
+* Replaces the model of **RadMech** to **Utsuho Reiuji (灵乌路空) (experimental)**.
 
 
 [Demo Video Coil-Head Sekibanki + NutSatori + SuikaGiant](https://www.bilibili.com/video/BV1PM4m1Q7EF)
 
 [Demo Video HoarderMarisa](https://www.bilibili.com/video/BV1q1421o7g7)
 
-[Demo Video Old-Bird Utsuho](https://www.bilibili.com/video/BV1q1421o7g7)
+[Demo Video Old-Bird Utsuho](https://www.bilibili.com/video/BV1br421G7i8)
 
 ![Model Picture](https://github.com/BoredBean/TouhouEnemyModels/assets/18239170/32d32bb0-fa96-43e7-965b-118fc0ea9292)
 
+![Model Picture](https://github.com/BoredBean/TouhouCompany/assets/18239170/bbfaa786-8300-47ee-b598-fb22f3c4c2ab)
 
 ## Issues
 
@@ -64,6 +67,6 @@ His great work: [ChineseBrideAndNewYearGhostgirl](https://thunderstore.io/c/leth
 All rights reserved by their original owner. The modified assets will **not** be made public unless **made by myself** or **being permitted**.
 
 ## Contact
-https://github.com/BoredBean/TouhouCompany
-https://space.bilibili.com/16119669
-https://steamcommunity.com/id/bean_10086/
+* https://github.com/BoredBean/TouhouCompany
+* https://space.bilibili.com/16119669
+* https://steamcommunity.com/id/bean_10086/
