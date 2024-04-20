@@ -17,3 +17,9 @@
 1. Replace HoarderBug to Marisa.
 2. Change the enemies to their normal size.
 3. Fixed Suika theme keep playing after dead.
+### Release v0.9.3
+1. Add lots of audio volume configs.
+2. Re-create all of the assets that messed up by myself.
+3. Release UtsuhoMech.
+4. Recovering from the loneliness of no one hitting the like button.
+5. Waiting for someone else to take over this project since I'm seeking to do something else.

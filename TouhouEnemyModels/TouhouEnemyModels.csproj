@@ -28,6 +28,9 @@
       <Reference Include="Assembly-CSharp">
         <HintPath>lib\Assembly-CSharp.dll</HintPath>
       </Reference>
+      <Reference Include="LC_SoundTool">
+        <HintPath>lib\LC_SoundTool.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.Animation.Rigging">
         <HintPath>lib\Unity.Animation.Rigging.dll</HintPath>
       </Reference>
