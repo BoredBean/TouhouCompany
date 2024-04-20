@@ -1,3 +1,4 @@
+![LogoTextV1](https://github.com/BoredBean/TouhouCompany/assets/18239170/0450fd31-932d-4533-b27d-a26d5cb4a1f8)
 # TouhouEnemyModels
 This mod replaces the model of enemies with **Touhou characters (modified)** and also adds their **theme music (shortened)**. 
 
@@ -36,7 +37,7 @@ Most of the codes reference to:
 * [NecoArcHoarderBugMod](https://thunderstore.io/c/lethal-company/p/Chdata/NecoArcHoarderBugMod/) by Chdata.
 
 
-Special thanks to TShine for generously sharing their experience and taking the time to answer my questions patiently. 
+Special thanks to **TShine** for generously sharing his experience and patiently answering my questions. 
 
 His great work: [ChineseBrideAndNewYearGhostgirl](https://thunderstore.io/c/lethal-company/p/TShine/ChineseBrideAndNewYearGhostgirl/)
 
