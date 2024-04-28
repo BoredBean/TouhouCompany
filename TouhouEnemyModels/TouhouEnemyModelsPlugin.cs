@@ -15,26 +15,27 @@ namespace TouhouEnemyModels
     public class TouhouEnemiesPlugin : BaseUnityPlugin
     {
         public static TouhouEnemiesPlugin Instance;
+        public static bool SoundToolGood = false;
 
         public static AudioClip LostAudio;
         internal static ConfigEntry<bool> EnableDeathAudio;
         internal static ConfigEntry<float> DeathAudioVolume;
 
-        public static GameObject sekiVisuals;
-        public static GameObject sekiHeadVisuals;
+        public static GameObject SekiVisuals;
+        public static GameObject SekiHeadVisuals;
         public static AudioClip SekibankiTheme;
         internal static ConfigEntry<bool> EnableCoilHeadReplace;
         internal static ConfigEntry<bool> EnableBodyCoilReplace;
         internal static ConfigEntry<bool> EnableSekibankiTheme;
         internal static ConfigEntry<float> SekibankiSFXVolume;
 
-        public static GameObject satoriVisuals;
+        public static GameObject SatoriVisuals;
         public static AudioClip SatoriTheme;
         internal static ConfigEntry<bool> EnableNutcrackerReplace;
         internal static ConfigEntry<bool> EnableSatoriTheme;
         internal static ConfigEntry<float> SatoriSFXVolume;
 
-        public static GameObject suikaVisuals;
+        public static GameObject SuikaVisuals;
         public static AudioClip SuikaTheme;
         public static AudioClip[] SuikaAudios = new AudioClip[4];
         internal static ConfigEntry<bool> EnableForestGiantReplace;
@@ -43,95 +44,115 @@ namespace TouhouEnemyModels
         internal static ConfigEntry<bool> EnableSuikaVoice;
         internal static ConfigEntry<float> SuikaVoiceVolume;
 
-        public static GameObject marisaVisuals;
+        public static GameObject MarisaVisuals;
+        public static GameObject BugVisuals;
         public static AudioClip MarisaTheme;
         public static AudioClip[] MarisaAudios = new AudioClip[8];
+        public static AudioClip[] BugAudios = new AudioClip[6];
         internal static ConfigEntry<bool> EnableHoarderBugReplace;
+        internal static ConfigEntry<int> BugSpawnRate;
         internal static ConfigEntry<bool> EnableMarisaTheme;
         internal static ConfigEntry<float> MarisaSFXVolume;
         internal static ConfigEntry<bool> EnableMarisaVoice;
+        internal static ConfigEntry<bool> EnableBugVoice;
         internal static ConfigEntry<float> MarisaVoiceVolume;
 
-        public static GameObject utsuhoVisuals;
-        public static GameObject utsuhoNestSpawnVisuals;
+        public static GameObject UtsuhoVisuals;
+        public static GameObject UtsuhoNestSpawnVisuals;
         public static AudioClip UtsuhoTheme;
         internal static ConfigEntry<bool> EnableRadMechReplace;
         internal static ConfigEntry<bool> EnableUtsuhoTheme;
         internal static ConfigEntry<float> UtsuhoSFXVolume;
 
+        public static GameObject YuyukoVisuals;
+        public static AudioClip YuyukoTheme;
+        internal static ConfigEntry<bool> EnableSandWormReplace;
+        internal static ConfigEntry<bool> EnableYuyukoTheme;
+        internal static ConfigEntry<float> YuyukoSFXVolume;
+
         private void Awake()
         {
             Instance = this;
-            Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_NAME} is loaded!");
+            Logger.LogInfo("""  ______ ____   __  __ __  __ ____   __  __""");
+            Logger.LogInfo(""" /_  __// __ \ / / / // / / // __ \ / / / /""");
+            Logger.LogInfo("""  / /  / / / // / / // /_/ // / / // / / / """);
+            Logger.LogInfo(""" / /  / /_/ // /_/ // __  // /_/ // /_/ /  """);
+            Logger.LogInfo("""/_/   \____/ \____//_/ /_/ \____/ \____/   """);
+            Logger.LogInfo("");
 
-            EnableDeathAudio = Config.Bind("General", "EnableDeathAudio", false,
+            EnableDeathAudio = Config.Bind("0.General", "EnableDeathAudio", false,
                 "Play a death audio when an enemy is killed.");
-            DeathAudioVolume = Config.Bind("General", "DeathAudioVolume(0.0-1.0)", 0.5f,
+            DeathAudioVolume = Config.Bind("0.General", "DeathAudioVolume(0.0-1.0)", 0.3f,
                 "Config the volume of the death audio.");
 
-            EnableCoilHeadReplace = Config.Bind("CoilHead", "EnableCoilHead", true,
+            EnableCoilHeadReplace = Config.Bind("1.CoilHead", "EnableCoilHead", true,
                 "Replace the model of Coil-Head to Sekibanki.");
-            EnableBodyCoilReplace = Config.Bind("CoilHead", "EnableDeadBodyCoil", true,
+            EnableBodyCoilReplace = Config.Bind("1.CoilHead", "EnableDeadBodyCoil", true,
                 "Replace the coil on the dead body to a head of Sekibanki.");
-            EnableSekibankiTheme = Config.Bind("CoilHead", "EnableSekibankiTheme", true,
+            EnableSekibankiTheme = Config.Bind("1.CoilHead", "EnableSekibankiTheme", true,
                 "Replace the step audio to Sekibanki's theme music.");
-            SekibankiSFXVolume = Config.Bind("CoilHead", "SekibankiSoundVolume(0.0-1.0)", 0.5f,
+            SekibankiSFXVolume = Config.Bind("1.CoilHead", "SekibankiSoundVolume(0.0-1.0)", 0.3f,
                 "Config the volume of Sekibanki's sound effect including the theme music.");
 
-            EnableNutcrackerReplace = Config.Bind("Nutcracker", "EnableNutcracker", true,
+            EnableNutcrackerReplace = Config.Bind("2.Nutcracker", "EnableNutcracker", true,
                 "Replace the model of Nutcracker to NutSatori.");
-            EnableSatoriTheme = Config.Bind("Nutcracker", "EnableSatoriTheme", true,
+            EnableSatoriTheme = Config.Bind("2.Nutcracker", "EnableSatoriTheme", true,
                 "Replace the angry audio to Satori's theme music.");
-            SatoriSFXVolume = Config.Bind("Nutcracker", "SatoriSoundVolume(0.0-1.0)", 0.5f,
-                "Config the volume of Satori's sound effect including the theme music.");
+            SatoriSFXVolume = Config.Bind("2.Nutcracker", "SatoriSoundVolume(0.0-1.0)", 0.3f,
+                "** THIS NOT WORK! ** Config the volume of Satori's sound effect including the theme music.");
 
-            EnableForestGiantReplace = Config.Bind("ForestGiant", "EnableForestGiant", true,
+            EnableForestGiantReplace = Config.Bind("3.ForestGiant", "EnableForestGiant", true,
                 "Replace the model of ForestGiant to SuikaGiant.");
-            EnableSuikaTheme = Config.Bind("ForestGiant", "EnableSuikaTheme", true,
+            EnableSuikaTheme = Config.Bind("3.ForestGiant", "EnableSuikaTheme", true,
                 "Play Suika's theme music.");
-            SuikaThemeVolume = Config.Bind("ForestGiant", "SuikaThemeVolume(0.0-1.0)", 0.5f,
+            SuikaThemeVolume = Config.Bind("3.ForestGiant", "SuikaThemeVolume(0.0-1.0)", 0.3f,
                 "Config the volume of Suika's theme music.");
-            EnableSuikaVoice = Config.Bind("ForestGiant", "EnableSuikaVoice", true,
+            EnableSuikaVoice = Config.Bind("3.ForestGiant", "EnableSuikaVoice", true,
                 "Suika has something to say.");
-            SuikaVoiceVolume = Config.Bind("ForestGiant", "SuikaVoiceVolume(0.0-1.0)", 1f,
+            SuikaVoiceVolume = Config.Bind("3.ForestGiant", "SuikaVoiceVolume(0.0-1.0)", 1f,
                 "Config the volume of Suika's voice.");
 
-            EnableHoarderBugReplace = Config.Bind("HoarderBug", "EnableHoarderBug", true,
+            EnableHoarderBugReplace = Config.Bind("4.HoarderBug", "EnableHoarderBug", true,
                 "Replace the model of HoarderBug to HoarderMarisa.");
-            EnableMarisaTheme = Config.Bind("HoarderBug", "EnableMarisaTheme", true,
-                "Play Marisa's theme music.");
-            MarisaSFXVolume = Config.Bind("HoarderBug", "MarisaSoundVolume(0.0-1.0)", 0.5f,
+            BugSpawnRate = Config.Bind("4.HoarderBug", "BugSpawnRate(0-10)", 5,
+                "How likely Marisa will be spawn as a bug. HoarderMarisa(0) -> KirisameBug(10) No Sync!");
+            EnableMarisaTheme = Config.Bind("4.HoarderBug", "EnableMarisaTheme", true,
+                "Play Marisa's theme music. Not for the bug.");
+            MarisaSFXVolume = Config.Bind("4.HoarderBug", "MarisaSoundVolume(0.0-1.0)", 0.3f,
                 "Config the volume of Marisa's sound effect including the theme music.");
-            EnableMarisaVoice = Config.Bind("HoarderBug", "EnableMarisaVoice", true,
+            EnableMarisaVoice = Config.Bind("4.HoarderBug", "EnableMarisaVoice", true,
                 "Marisa has something to say.");
-            MarisaVoiceVolume = Config.Bind("HoarderBug", "MarisaVoiceVolume(0.0-1.0)", 1f,
+            EnableBugVoice = Config.Bind("4.HoarderBug", "EnableBugVoice", true,
+                "It sounds like a Zerg Queen, but only for the bug.");
+            MarisaVoiceVolume = Config.Bind("4.HoarderBug", "MarisaVoiceVolume(0.0-1.0)", 1f,
                 "Config the volume of Marisa's voice.");
 
-            EnableRadMechReplace = Config.Bind("RadMech", "EnableRadMech", true,
+            EnableRadMechReplace = Config.Bind("5.RadMech", "EnableRadMech", true,
                 "Replace the model of RadMech to UtsuhoMech.");
-            EnableUtsuhoTheme = Config.Bind("RadMech", "EnableUtsuhoTheme", true,
+            EnableUtsuhoTheme = Config.Bind("5.RadMech", "EnableUtsuhoTheme", true,
                 "Play Utsuho's theme music.");
-            UtsuhoSFXVolume = Config.Bind("RadMech", "UtsuhoSoundVolume(0.0-1.0)", 0.5f,
-                "Config the volume of Utsuho's sound effect including the theme music.");
+            UtsuhoSFXVolume = Config.Bind("5.RadMech", "UtsuhoSoundVolume(0.0-1.0)", 0.3f,
+                "** THIS NOT WORK! ** Config the volume of Utsuho's sound effect including the theme music.");
 
+            EnableSandWormReplace = Config.Bind("6.SandWorm", "EnableSandWorm", true,
+                "Replace the model of SandWorm to Yuyuko.");
+            EnableYuyukoTheme = Config.Bind("6.SandWorm", "EnableYuyukoTheme", true,
+                "Play Yuyuko's theme music.");
+            YuyukoSFXVolume = Config.Bind("6.SandWorm", "YuyukoSoundVolume(0.0-1.0)", 0.3f,
+                "Config the volume of Yuyuko's sound effect including the theme music.");
+
+            Logger.LogInfo("Patching all functions.");
 
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
-        }
 
-        private void Start()
-        {
+            Logger.LogInfo("All systems ready, begin loading assets.");
+
             try
             {
                 var bundle =
                     AssetUtils.LoadAssetBundleFromResources("touhouenemies", typeof(TouhouEnemiesPlugin).Assembly);
                 Logger.LogInfo($"Loading asset bundle.");
                 if (bundle == null) return;
-
-                //var allAssets = bundle.LoadAllAssets();
-                //foreach (var asset in allAssets)
-                //{
-                //    Logger.LogInfo(asset.name);
-                //}
 
                 if (EnableDeathAudio.Value)
                 {
@@ -142,9 +163,9 @@ namespace TouhouEnemyModels
                 var componentsInChildren = new List<Renderer>();
                 if (EnableCoilHeadReplace.Value)
                 {
-                    sekiVisuals = bundle.LoadAsset<GameObject>("Sekibanki.prefab");
-                    componentsInChildren.AddRange(sekiVisuals.GetComponentsInChildren<Renderer>(true).ToList());
-                    Logger.LogInfo($"Load Sekibanki: {sekiVisuals != null}");
+                    SekiVisuals = bundle.LoadAsset<GameObject>("Sekibanki.prefab");
+                    componentsInChildren.AddRange(SekiVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    Logger.LogInfo($"Load Sekibanki: {SekiVisuals != null}");
 
                     if (EnableSekibankiTheme.Value)
                     {
@@ -154,30 +175,29 @@ namespace TouhouEnemyModels
 
                     if (EnableBodyCoilReplace.Value)
                     {
-                        sekiHeadVisuals = bundle.LoadAsset<GameObject>("SekibankiHead.prefab");
-                        Logger.LogInfo($"Load SekibankiHead: {sekiHeadVisuals != null}");
+                        SekiHeadVisuals = bundle.LoadAsset<GameObject>("SekibankiHead.prefab");
+                        Logger.LogInfo($"Load SekibankiHead: {SekiHeadVisuals != null}");
                     }
                 }
 
                 if (EnableNutcrackerReplace.Value)
                 {
-                    satoriVisuals = bundle.LoadAsset<GameObject>("NutSatori.prefab");
-                    componentsInChildren.AddRange(satoriVisuals.GetComponentsInChildren<Renderer>(true).ToList());
-                    Logger.LogInfo($"Load NutSatori: {satoriVisuals != null}");
+                    SatoriVisuals = bundle.LoadAsset<GameObject>("NutSatori.prefab");
+                    componentsInChildren.AddRange(SatoriVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    Logger.LogInfo($"Load NutSatori: {SatoriVisuals != null}");
 
                     if (EnableSatoriTheme.Value)
                     {
                         SatoriTheme = bundle.LoadAsset<AudioClip>("SatoriTheme.mp3");
-                        //if (SatoriTheme != null) SoundTool.ReplaceAudioClip("NutcrackerAngry", SatoriTheme);
                         Logger.LogInfo($"Load SatoriTheme: {SatoriTheme != null}");
                     }
                 }
 
                 if (EnableForestGiantReplace.Value)
                 {
-                    suikaVisuals = bundle.LoadAsset<GameObject>("SuikaGiant.prefab");
-                    componentsInChildren.AddRange(suikaVisuals.GetComponentsInChildren<Renderer>(true).ToList());
-                    Logger.LogInfo($"Load SuikaGiant: {suikaVisuals != null}");
+                    SuikaVisuals = bundle.LoadAsset<GameObject>("SuikaGiant.prefab");
+                    componentsInChildren.AddRange(SuikaVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    Logger.LogInfo($"Load SuikaGiant: {SuikaVisuals != null}");
 
                     if (EnableSuikaTheme.Value)
                     {
@@ -188,12 +208,9 @@ namespace TouhouEnemyModels
                     if (EnableSuikaVoice.Value)
                     {
                         SuikaAudios[0] = bundle.LoadAsset<AudioClip>("SuikaAngry.ogg");
-                        SuikaAudios[1] = bundle.LoadAsset<AudioClip>("SuikaDead.ogg");
+                        SuikaAudios[1] = bundle.LoadAsset<AudioClip>("SuikaLost.ogg");
                         SuikaAudios[2] = bundle.LoadAsset<AudioClip>("SuikaHappy.ogg");
                         SuikaAudios[3] = bundle.LoadAsset<AudioClip>("SuikaWarn.ogg");
-                        SoundTool.ReplaceAudioClip("StunGiant", SuikaAudios[0]);
-                        SoundTool.ReplaceAudioClip("ForestGiantDie", SuikaAudios[1]);
-                        SoundTool.ReplaceAudioClip("FGiantEatPlayerSFX", SuikaAudios[3]);
                         Logger.LogInfo($"Load SuikaAudio: 0: {SuikaAudios[0] != null}, " +
                                        $"1: {SuikaAudios[1] != null}, 2: {SuikaAudios[2] != null}, 3: {SuikaAudios[3] != null}");
                     }
@@ -201,14 +218,15 @@ namespace TouhouEnemyModels
 
                 if (EnableHoarderBugReplace.Value)
                 {
-                    marisaVisuals = bundle.LoadAsset<GameObject>("HoarderMarisa.prefab");
-                    componentsInChildren.AddRange(marisaVisuals.GetComponentsInChildren<Renderer>(true).ToList());
-                    Logger.LogInfo($"Load HoarderMarisa: {marisaVisuals != null}");
+                    MarisaVisuals = bundle.LoadAsset<GameObject>("HoarderMarisa.prefab");
+                    BugVisuals = bundle.LoadAsset<GameObject>("KirisameBug.prefab");
+                    componentsInChildren.AddRange(MarisaVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    componentsInChildren.AddRange(BugVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    Logger.LogInfo($"Load HoarderMarisa: {MarisaVisuals != null}");
 
                     if (EnableMarisaTheme.Value)
                     {
                         MarisaTheme = bundle.LoadAsset<AudioClip>("MarisaTheme.mp3");
-                        if (MarisaTheme != null) SoundTool.ReplaceAudioClip("Fly", MarisaTheme);
                         Logger.LogInfo($"Load MarisaTheme: {MarisaTheme != null}");
                     }
 
@@ -216,18 +234,12 @@ namespace TouhouEnemyModels
                     {
                         MarisaAudios[0] = bundle.LoadAsset<AudioClip>("MarisaAngry.ogg");
                         MarisaAudios[1] = bundle.LoadAsset<AudioClip>("MarisaAttack.ogg");
-                        MarisaAudios[2] = bundle.LoadAsset<AudioClip>("MarisaDead.ogg");
+                        MarisaAudios[2] = bundle.LoadAsset<AudioClip>("MarisaLost.ogg");
                         MarisaAudios[3] = bundle.LoadAsset<AudioClip>("MarisaGreeting.ogg");
                         MarisaAudios[4] = bundle.LoadAsset<AudioClip>("MarisaHappy.ogg");
                         MarisaAudios[5] = bundle.LoadAsset<AudioClip>("MarisaHurt.ogg");
                         MarisaAudios[6] = bundle.LoadAsset<AudioClip>("MarisaMove.ogg");
                         MarisaAudios[7] = bundle.LoadAsset<AudioClip>("MarisaWarn.ogg");
-                        //if (MarisaAudios[0] != null) SoundTool.ReplaceAudioClip("Chitter1", MarisaAudios[0]);
-                        //if (MarisaAudios[3] != null) SoundTool.ReplaceAudioClip("Chitter2", MarisaAudios[3]);
-                        //if (MarisaAudios[7] != null) SoundTool.ReplaceAudioClip("Chitter3", MarisaAudios[7]);
-                        //if (MarisaAudios[0] != null) SoundTool.ReplaceAudioClip("AngryScreech", MarisaAudios[0]);
-                        //if (MarisaAudios[7] != null) SoundTool.ReplaceAudioClip("AngryScreech2", MarisaAudios[7]);
-                        if (MarisaAudios[1] != null) SoundTool.ReplaceAudioClip("HoarderBugCry", MarisaAudios[1]);
 
                         Logger.LogInfo($"Load MarisaAudio: 0: {MarisaAudios[0] != null}, " +
                                        $"1: {MarisaAudios[1] != null}, 2: {MarisaAudios[2] != null}, " +
@@ -235,23 +247,51 @@ namespace TouhouEnemyModels
                                        $"5: {MarisaAudios[5] != null}, 6: {MarisaAudios[6] != null}, " +
                                        $"7: {MarisaAudios[7] != null}");
                     }
+
+                    if (EnableBugVoice.Value)
+                    {
+                        BugAudios[0] = bundle.LoadAsset<AudioClip>("BugAngry.ogg");
+                        BugAudios[1] = bundle.LoadAsset<AudioClip>("BugAttack.ogg");
+                        BugAudios[2] = bundle.LoadAsset<AudioClip>("BugLost.ogg");
+                        BugAudios[3] = bundle.LoadAsset<AudioClip>("BugGreeting.ogg");
+                        BugAudios[4] = bundle.LoadAsset<AudioClip>("BugHappy.ogg");
+                        BugAudios[5] = bundle.LoadAsset<AudioClip>("BugWarn.ogg");
+
+                        Logger.LogInfo($"Load MarisaAudio: 0: {BugAudios[0] != null}, " +
+                                       $"1: {BugAudios[1] != null}, 2: {BugAudios[2] != null}, " +
+                                       $"3: {BugAudios[3] != null}, 4: {BugAudios[4] != null}, " +
+                                       $"5: {BugAudios[5] != null}");
+                    }
                 }
 
                 if (EnableRadMechReplace.Value)
                 {
-                    utsuhoVisuals = bundle.LoadAsset<GameObject>("UtsuhoMech.prefab");
-                    utsuhoNestSpawnVisuals = bundle.LoadAsset<GameObject>("UtsuhoMechNestSpawnObject.prefab");
-                    componentsInChildren.AddRange(utsuhoVisuals.GetComponentsInChildren<Renderer>(true).ToList());
-                    componentsInChildren.AddRange(utsuhoNestSpawnVisuals.GetComponentsInChildren<Renderer>(true)
+                    UtsuhoVisuals = bundle.LoadAsset<GameObject>("UtsuhoMech.prefab");
+                    UtsuhoNestSpawnVisuals = bundle.LoadAsset<GameObject>("UtsuhoMechNestSpawnObject.prefab");
+                    componentsInChildren.AddRange(UtsuhoVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    componentsInChildren.AddRange(UtsuhoNestSpawnVisuals.GetComponentsInChildren<Renderer>(true)
                         .ToList());
                     Logger.LogInfo(
-                        $"Load UtsuhoMech: {utsuhoVisuals != null}, NestSpawnObject: {utsuhoNestSpawnVisuals != null}");
+                        $"Load UtsuhoMech: {UtsuhoVisuals != null}, NestSpawnObject: {UtsuhoNestSpawnVisuals != null}");
 
                     if (EnableUtsuhoTheme.Value)
                     {
                         UtsuhoTheme = bundle.LoadAsset<AudioClip>("UtsuhoTheme.mp3");
-                        if (UtsuhoTheme != null) SoundTool.ReplaceAudioClip("LRADAlarm3", UtsuhoTheme);
                         Logger.LogInfo($"Load UtsuhoTheme: {UtsuhoTheme != null}");
+                    }
+                }
+
+                if (EnableSandWormReplace.Value)
+                {
+                    YuyukoVisuals = bundle.LoadAsset<GameObject>("EaterYuyuko.prefab");
+                    componentsInChildren.AddRange(YuyukoVisuals.GetComponentsInChildren<Renderer>(true).ToList());
+                    Logger.LogInfo(
+                        $"Load EaterYuyuko: {YuyukoVisuals != null}");
+
+                    if (EnableYuyukoTheme.Value)
+                    {
+                        YuyukoTheme = bundle.LoadAsset<AudioClip>("YuyukoTheme.mp3");
+                        Logger.LogInfo($"Load YuyukoTheme: {YuyukoTheme != null}");
                     }
                 }
 
@@ -263,6 +303,21 @@ namespace TouhouEnemyModels
             catch (Exception ex)
             {
                 Logger.LogError("Failed to load assetbundle: " + ex.Message);
+            }
+        }
+
+        private void Start()
+        {
+            try
+            {
+                if (SuikaAudios[1] != null) SoundTool.ReplaceAudioClip("StunGiant", SuikaAudios[1]);
+                if (SuikaAudios[3] != null) SoundTool.ReplaceAudioClip("FGiantEatPlayerSFX", SuikaAudios[3]);
+                SoundToolGood = true;
+                Logger.LogInfo($"SoundTool is good.");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("SoundTool not good." + ex.Message);
             }
         }
 
