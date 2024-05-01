@@ -1,0 +1,8 @@
+{
+  "name": "TouhouCompany",
+  "version_number": "0.0.1",
+  "website_url": "https://github.com/BoredBean/TouhouCompany",
+  "description": "[Update: Yukuri+上海] 场景中物体的东方模型与音效替换，可配置。This mod replaces the models in cutscene with Touhou relative object(modified) and relative audios. All configurable.",
+  "dependencies": [
+  ]
+}
