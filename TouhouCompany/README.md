@@ -1,11 +1,12 @@
 ![LogoTextV1](https://github.com/BoredBean/TouhouCompany/assets/18239170/0450fd31-932d-4533-b27d-a26d5cb4a1f8)
 # TouhouCompany
-This mod replaces many objects with Touhou related assets. 
+This mod replaces many objects with Touhou-related assets. 
 
 Original work: **東方Project** by **上海アリス幻樂団**
 
 * Replaces the model of **Jack o' Lantern** to **YukuriReimu**.
 * Replaces the model of **Plushie Pajama Man** to **上海人形**.
+![Snipaste_2024-05-01_19-16-55](https://github.com/BoredBean/TouhouCompany/assets/18239170/9355d0de-1f96-402d-8316-b9e0c1100536)
 
 ## Issues
 
