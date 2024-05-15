@@ -5,6 +5,7 @@ using Jotunn.Utils;
 using LCSoundTool;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -12,6 +13,7 @@ using UnityEngine;
 namespace TouhouEnemyModels
 {
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+    [BepInDependency("meow.ModelReplacementAPI", BepInDependency.DependencyFlags.HardDependency)]
     public class TouhouEnemiesPlugin : BaseUnityPlugin
     {
         public static TouhouEnemiesPlugin Instance;
@@ -127,7 +129,7 @@ namespace TouhouEnemyModels
             MarisaVoiceVolume = Config.Bind("4.HoarderBug", "MarisaVoiceVolume(0.0-1.0)", 1f,
                 "Config the volume of Marisa's voice.");
 
-            EnableRadMechReplace = Config.Bind("5.RadMech", "EnableRadMech", true,
+            EnableRadMechReplace = Config.Bind("5.RadMech", "EnableRadMech", false,
                 "Replace the model of RadMech to UtsuhoMech.");
             EnableUtsuhoTheme = Config.Bind("5.RadMech", "EnableUtsuhoTheme", true,
                 "Play Utsuho's theme music.");
@@ -149,8 +151,11 @@ namespace TouhouEnemyModels
 
             try
             {
-                var bundle =
-                    AssetUtils.LoadAssetBundleFromResources("touhouenemies", typeof(TouhouEnemiesPlugin).Assembly);
+                var dllFolderPath = Path.GetDirectoryName(Info.Location);
+                if (dllFolderPath == null) return;
+                var assetBundleFilePath = Path.Combine(dllFolderPath, "touhouenemies");
+                var bundle = AssetBundle.LoadFromFile(assetBundleFilePath);
+
                 Logger.LogInfo($"Loading asset bundle.");
                 if (bundle == null) return;
 

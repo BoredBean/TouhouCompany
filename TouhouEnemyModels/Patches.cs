@@ -286,9 +286,17 @@ namespace TouhouEnemyModels
                         var bugSpawn = Random.Range(0, 10);
                         if (TouhouEnemiesPlugin.BugSpawnRate.Value < bugSpawn + 1)
                         {
-                            ai.transform.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
+                            var hoarderBugAnimator = hoarderBugModel?.Find("AnimContainer").GetComponent<Animator>();
+                            if (hoarderBugAnimator != null) hoarderBugAnimator.enabled = false;
+
+                                ai.transform.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "HoarderMarisa";
                             var marisaVisual = Object.Instantiate(TouhouEnemiesPlugin.MarisaVisuals);
+
+                            var marisaAnimator =
+                                marisaVisual.transform.Find("HoarderBugModel").GetComponent<Animator>();
+                            ai.creatureAnimator = marisaAnimator;
+
                             marisaVisual.transform.SetParent(ai.transform);
                             marisaVisual.transform.localPosition = Vector3.zero;
                             marisaVisual.transform.localRotation = Quaternion.identity;
@@ -313,10 +321,6 @@ namespace TouhouEnemyModels
                             ai.grabTarget.localPosition = grabTarget.localPosition;
 
                             TouhouEnemiesPlugin.Instance.AddLog($"GrabTarget: {ai.grabTarget != null}");
-
-                            var marisaAnimator =
-                                marisaVisual.transform.Find("HoarderBugModel").GetComponent<Animator>();
-                            ai.creatureAnimator = marisaAnimator;
 
                             TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
                         }
@@ -591,7 +595,7 @@ namespace TouhouEnemyModels
                 var suikaMeshRenderer = __instance.transform.Find("SuikaGiant(Clone)/FGiantModelContainer/BodyLOD0")
                     .GetComponent<SkinnedMeshRenderer>();
                 suikaMeshRenderer.SetBlendShapeWeight(3, 100);
-                suikaMeshRenderer.SetBlendShapeWeight(30, 100);
+                suikaMeshRenderer.SetBlendShapeWeight(5, 100);
                 TouhouEnemiesPlugin.Instance.AddLog($"Suika lost.");
             }
 
@@ -784,6 +788,8 @@ namespace TouhouEnemyModels
                                 "OldUtsuho";
                             var radMechMetaRig = radMechMesh?.Find("AnimContainer").Find("metarig");
                             if (radMechMetaRig == null) return;
+                            var radMechAnimator = radMechMesh?.Find("AnimContainer").GetComponent<Animator>();
+                            if (radMechAnimator != null) radMechAnimator.enabled = false;
                             radMechMetaRig.name = "old-metarig";
 
                             var utsuhoVisual = Object.Instantiate(TouhouEnemiesPlugin.UtsuhoVisuals);
