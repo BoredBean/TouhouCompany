@@ -30,3 +30,6 @@
 5. Give up tuning the shader, use HDLethalCompany if you want a better looking.
 6. Another version of HoarderBug. I call it KirisameBug.
 7. Compatible with V49.
+### Release v0.9.6
+1. Optimize the size.
+2. Add jiggle physics.
