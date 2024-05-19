@@ -60,368 +60,368 @@ namespace TouhouEnemyModels
             {
                 case SpringManAI ai when TouhouEnemiesPlugin.SekiVisuals != null &&
                                          TouhouEnemiesPlugin.EnableCoilHeadReplace.Value:
-                {
-                    try
                     {
-                        var coilHeadAnimator = ai.GetComponentInChildren<Animator>();
-                        var originalController = coilHeadAnimator.runtimeAnimatorController;
+                        try
+                        {
+                            var coilHeadAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = coilHeadAnimator.runtimeAnimatorController;
 
-                        var springManModel = ai.transform.Find("SpringManModel");
-                        var springManBody = springManModel?.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
-                        if (springManBody != null) springManBody.enabled = false;
-                        var springManHead = springManModel?.Find("Head")?.GetComponent<MeshRenderer>();
-                        if (springManHead != null) springManHead.enabled = false;
-                        springManModel.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
-                            "Coilbanki";
-                        var springManMetaRig = springManModel.Find("AnimContainer").Find("metarig");
-                        if (springManMetaRig == null) return;
-                        springManMetaRig.name = "old-metarig";
-                        var sekiVisual = Object.Instantiate(TouhouEnemiesPlugin.SekiVisuals);
-                        sekiVisual.transform.SetParent(ai.transform);
-                        sekiVisual.transform.localPosition = Vector3.zero;
-                        sekiVisual.transform.localRotation = Quaternion.identity;
-                        sekiVisual.transform.localScale = Vector3.one;
-                        var sekiModel = sekiVisual.transform.Find("SekibankiModel");
-                        var sekiBody = sekiModel.transform.Find("Body");
-                        var sekiHead = sekiModel.transform.Find("Head");
-                        var sekiMetarig = sekiModel.transform.Find("AnimContainer");
-                        sekiMetarig.SetParent(springManMetaRig.parent, true);
-                        sekiMetarig.transform.localScale = springManMetaRig.transform.localScale;
-                        sekiMetarig.transform.localRotation = springManMetaRig.transform.localRotation;
-                        sekiMetarig.transform.localPosition = springManMetaRig.transform.localPosition;
-                        var component = sekiBody.GetComponent<SkinnedMeshRenderer>();
-                        component.rootBone = sekiMetarig.transform.Find("spine");
-                        component = sekiHead.GetComponent<SkinnedMeshRenderer>();
-                        component.rootBone = sekiMetarig.transform.Find("spine");
-                        sekiMetarig.name = "metarig";
+                            var springManModel = ai.transform.Find("SpringManModel");
+                            var springManBody = springManModel?.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
+                            if (springManBody != null) springManBody.enabled = false;
+                            var springManHead = springManModel?.Find("Head")?.GetComponent<MeshRenderer>();
+                            if (springManHead != null) springManHead.enabled = false;
+                            springManModel.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
+                                "Coilbanki";
+                            var springManMetaRig = springManModel.Find("AnimContainer").Find("metarig");
+                            if (springManMetaRig == null) return;
+                            springManMetaRig.name = "old-metarig";
+                            var sekiVisual = Object.Instantiate(TouhouEnemiesPlugin.SekiVisuals);
+                            sekiVisual.transform.SetParent(ai.transform);
+                            sekiVisual.transform.localPosition = Vector3.zero;
+                            sekiVisual.transform.localRotation = Quaternion.identity;
+                            sekiVisual.transform.localScale = Vector3.one;
+                            var sekiModel = sekiVisual.transform.Find("SekibankiModel");
+                            var sekiBody = sekiModel.transform.Find("Body");
+                            var sekiHead = sekiModel.transform.Find("Head");
+                            var sekiMetarig = sekiModel.transform.Find("AnimContainer");
+                            sekiMetarig.SetParent(springManMetaRig.parent, true);
+                            sekiMetarig.transform.localScale = springManMetaRig.transform.localScale;
+                            sekiMetarig.transform.localRotation = springManMetaRig.transform.localRotation;
+                            sekiMetarig.transform.localPosition = springManMetaRig.transform.localPosition;
+                            var component = sekiBody.GetComponent<SkinnedMeshRenderer>();
+                            component.rootBone = sekiMetarig.transform.Find("spine");
+                            component = sekiHead.GetComponent<SkinnedMeshRenderer>();
+                            component.rootBone = sekiMetarig.transform.Find("spine");
+                            sekiMetarig.name = "metarig";
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"SpringMan model changed.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"SpringMan model changed.");
 
-                        //ai.mainCollider = sekiModel.GetComponent<Collider>();
+                            //ai.mainCollider = sekiModel.GetComponent<Collider>();
 
-                        //TouhouEnemiesPlugin.Instance.AddLog($"Collider: {ai.mainCollider != null}");
+                            //TouhouEnemiesPlugin.Instance.AddLog($"Collider: {ai.mainCollider != null}");
 
-                        /* This is reset. the state of the animator? I have no idea. It just works. */
-                        coilHeadAnimator.runtimeAnimatorController =
-                            new AnimatorOverrideController(originalController);
+                            /* This is reset. the state of the animator? I have no idea. It just works. */
+                            coilHeadAnimator.runtimeAnimatorController =
+                                new AnimatorOverrideController(originalController);
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator reset.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator reset.");
+                        }
+                        catch
+                        {
+                            TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace SpringMan.");
+                        }
+
+                        break;
                     }
-                    catch
-                    {
-                        TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace SpringMan.");
-                    }
-
-                    break;
-                }
                 case NutcrackerEnemyAI ai when TouhouEnemiesPlugin.SatoriVisuals != null &&
                                                TouhouEnemiesPlugin.EnableNutcrackerReplace.Value:
-                {
-                    try
                     {
-                        var nutcrackerAnimator = ai.GetComponentInChildren<Animator>();
-                        var originalController = nutcrackerAnimator.runtimeAnimatorController;
+                        try
+                        {
+                            var nutcrackerAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = nutcrackerAnimator.runtimeAnimatorController;
 
-                        var nutcrackerModel = ai.transform.Find("MeshContainer");
-                        var nutcrackerLod0 = nutcrackerModel?.Find("LOD0")?.GetComponent<SkinnedMeshRenderer>();
-                        var nutcrackerLod1 = nutcrackerModel?.Find("LOD1")?.GetComponent<SkinnedMeshRenderer>();
-                        var nutcrackerTestShotgun = nutcrackerModel
-                            ?.Find(
-                                "AnimContainer/metarig/spinecontainer/GunAndArmsContainer/GunPoint/GunPointWithOffset/TestShotgun")
-                            ?.GetComponent<MeshRenderer>();
-                        var nutcrackerGunBarrel = nutcrackerModel
-                            ?.Find(
-                                "AnimContainer/metarig/spinecontainer/GunAndArmsContainer/GunPoint/GunPointWithOffset/TestShotgun/GunBarrel")
-                            ?.GetComponent<MeshRenderer>();
-                        if (nutcrackerLod0 != null) nutcrackerLod0.enabled = false;
-                        if (nutcrackerLod1 != null) nutcrackerLod1.enabled = false;
-                        if (nutcrackerTestShotgun != null) nutcrackerTestShotgun.enabled = false;
-                        if (nutcrackerGunBarrel != null) nutcrackerGunBarrel.enabled = false;
-                        ai.transform.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
-                            "NutSatori";
-                        var nutcrackerMetaRig = nutcrackerModel?.Find("AnimContainer").Find("metarig");
-                        if (nutcrackerMetaRig == null) return;
-                        nutcrackerMetaRig.name = "old-metarig";
-                        var satoriVisual = Object.Instantiate(TouhouEnemiesPlugin.SatoriVisuals);
-                        satoriVisual.transform.SetParent(ai.transform);
-                        satoriVisual.transform.localPosition = Vector3.zero;
-                        satoriVisual.transform.localRotation = Quaternion.identity;
-                        satoriVisual.transform.localScale = Vector3.one;
-                        var satoriMesh = satoriVisual.transform.Find("MeshContainer/LOD0");
-                        var satoriMetarig = satoriVisual.transform.Find("MeshContainer/Armature/metarig");
-                        satoriMetarig.SetParent(nutcrackerMetaRig.parent, true);
-                        satoriMetarig.transform.localScale = nutcrackerMetaRig.transform.localScale;
-                        satoriMetarig.transform.localRotation = nutcrackerMetaRig.transform.localRotation;
-                        satoriMetarig.transform.localPosition = nutcrackerMetaRig.transform.localPosition;
-                        var component = satoriMesh.GetComponent<SkinnedMeshRenderer>();
-                        component.rootBone = satoriMetarig.transform.Find("spinecontainer/spine");
-                        satoriMetarig.name = "metarig";
+                            var nutcrackerModel = ai.transform.Find("MeshContainer");
+                            var nutcrackerLod0 = nutcrackerModel?.Find("LOD0")?.GetComponent<SkinnedMeshRenderer>();
+                            var nutcrackerLod1 = nutcrackerModel?.Find("LOD1")?.GetComponent<SkinnedMeshRenderer>();
+                            var nutcrackerTestShotgun = nutcrackerModel
+                                ?.Find(
+                                    "AnimContainer/metarig/spinecontainer/GunAndArmsContainer/GunPoint/GunPointWithOffset/TestShotgun")
+                                ?.GetComponent<MeshRenderer>();
+                            var nutcrackerGunBarrel = nutcrackerModel
+                                ?.Find(
+                                    "AnimContainer/metarig/spinecontainer/GunAndArmsContainer/GunPoint/GunPointWithOffset/TestShotgun/GunBarrel")
+                                ?.GetComponent<MeshRenderer>();
+                            if (nutcrackerLod0 != null) nutcrackerLod0.enabled = false;
+                            if (nutcrackerLod1 != null) nutcrackerLod1.enabled = false;
+                            if (nutcrackerTestShotgun != null) nutcrackerTestShotgun.enabled = false;
+                            if (nutcrackerGunBarrel != null) nutcrackerGunBarrel.enabled = false;
+                            ai.transform.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
+                                "NutSatori";
+                            var nutcrackerMetaRig = nutcrackerModel?.Find("AnimContainer").Find("metarig");
+                            if (nutcrackerMetaRig == null) return;
+                            nutcrackerMetaRig.name = "old-metarig";
+                            var satoriVisual = Object.Instantiate(TouhouEnemiesPlugin.SatoriVisuals);
+                            satoriVisual.transform.SetParent(ai.transform);
+                            satoriVisual.transform.localPosition = Vector3.zero;
+                            satoriVisual.transform.localRotation = Quaternion.identity;
+                            satoriVisual.transform.localScale = Vector3.one;
+                            var satoriMesh = satoriVisual.transform.Find("MeshContainer/LOD0");
+                            var satoriMetarig = satoriVisual.transform.Find("MeshContainer/Armature/metarig");
+                            satoriMetarig.SetParent(nutcrackerMetaRig.parent, true);
+                            satoriMetarig.transform.localScale = nutcrackerMetaRig.transform.localScale;
+                            satoriMetarig.transform.localRotation = nutcrackerMetaRig.transform.localRotation;
+                            satoriMetarig.transform.localPosition = nutcrackerMetaRig.transform.localPosition;
+                            var component = satoriMesh.GetComponent<SkinnedMeshRenderer>();
+                            component.rootBone = satoriMetarig.transform.Find("spinecontainer/spine");
+                            satoriMetarig.name = "metarig";
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"Nutcracker model changed.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"Nutcracker model changed.");
 
-                        ai.torsoContainer = satoriMetarig.transform.Find("spinecontainer");
+                            ai.torsoContainer = satoriMetarig.transform.Find("spinecontainer");
 
-                        var point = ai.torsoContainer.transform.Find("GunAndArmsContainer/GunPoint");
-                        ai.gunPoint.SetParent(point);
-                        var gunPoint = point.transform.Find("GunPointWithOffset");
-                        ai.gunPoint.localScale = gunPoint.localScale;
-                        ai.gunPoint.localRotation = gunPoint.localRotation;
-                        ai.gunPoint.localPosition = gunPoint.localPosition;
+                            var point = ai.torsoContainer.transform.Find("GunAndArmsContainer/GunPoint");
+                            ai.gunPoint.SetParent(point);
+                            var gunPoint = point.transform.Find("GunPointWithOffset");
+                            ai.gunPoint.localScale = gunPoint.localScale;
+                            ai.gunPoint.localRotation = gunPoint.localRotation;
+                            ai.gunPoint.localPosition = gunPoint.localPosition;
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"Torso: {ai.torsoContainer != null}, " +
-                                                            $"GunPoint: {ai.gunPoint != null}");
+                            TouhouEnemiesPlugin.Instance.AddLog($"Torso: {ai.torsoContainer != null}, " +
+                                                                $"GunPoint: {ai.gunPoint != null}");
 
-                        /* This reset the state of the animator? I have no idea. It just works. */
-                        nutcrackerAnimator.runtimeAnimatorController =
-                            new AnimatorOverrideController(originalController);
+                            /* This reset the state of the animator? I have no idea. It just works. */
+                            nutcrackerAnimator.runtimeAnimatorController =
+                                new AnimatorOverrideController(originalController);
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator is reset.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator is reset.");
+                        }
+                        catch
+                        {
+                            TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace Nutcracker.");
+                        }
+
+                        break;
                     }
-                    catch
-                    {
-                        TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace Nutcracker.");
-                    }
-
-                    break;
-                }
                 case ForestGiantAI ai when TouhouEnemiesPlugin.SuikaVisuals != null &&
                                            TouhouEnemiesPlugin.EnableForestGiantReplace.Value:
-                {
-                    try
                     {
-                        var forestGiantAnimator = ai.GetComponentInChildren<Animator>();
-                        var originalController = forestGiantAnimator.runtimeAnimatorController;
+                        try
+                        {
+                            var forestGiantAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = forestGiantAnimator.runtimeAnimatorController;
 
-                        var forestGiantModel = ai.transform.Find("FGiantModelContainer");
-                        var bodyLod0 = forestGiantModel?.Find("BodyLOD0")?.GetComponent<SkinnedMeshRenderer>();
-                        var bodyLod1 = forestGiantModel?.Find("BodyLOD1")?.GetComponent<SkinnedMeshRenderer>();
-                        var bodyLod2 = forestGiantModel?.Find("BodyLOD2")?.GetComponent<SkinnedMeshRenderer>();
-                        if (bodyLod0 != null) bodyLod0.enabled = false;
-                        if (bodyLod1 != null) bodyLod1.enabled = false;
-                        if (bodyLod2 != null) bodyLod2.enabled = false;
-                        ai.transform.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
-                            "SuikaGiant";
-                        var forestGiantMetaRig = forestGiantModel?.Find("AnimContainer").Find("metarig");
-                        if (forestGiantMetaRig == null) return;
-                        forestGiantMetaRig.name = "old-metarig";
-                        var suikaVisual = Object.Instantiate(TouhouEnemiesPlugin.SuikaVisuals);
-                        suikaVisual.transform.SetParent(ai.transform);
-                        suikaVisual.transform.localPosition = Vector3.zero;
-                        suikaVisual.transform.localRotation = Quaternion.identity;
-                        suikaVisual.transform.localScale = Vector3.one;
-                        var suikaMesh = suikaVisual.transform.Find("FGiantModelContainer/BodyLOD0");
-                        var suikaMetarig = suikaVisual.transform.Find("FGiantModelContainer/metarig");
-                        suikaMetarig.SetParent(forestGiantMetaRig.parent, true);
-                        suikaMetarig.transform.localScale = forestGiantMetaRig.transform.localScale;
-                        suikaMetarig.transform.localRotation = forestGiantMetaRig.transform.localRotation;
-                        suikaMetarig.transform.localPosition = forestGiantMetaRig.transform.localPosition;
-                        var suikaMeshRenderer = suikaMesh.GetComponent<SkinnedMeshRenderer>();
-                        suikaMeshRenderer.rootBone = suikaMetarig.transform.Find("spine");
-                        suikaMetarig.name = "metarig";
+                            var forestGiantModel = ai.transform.Find("FGiantModelContainer");
+                            var bodyLod0 = forestGiantModel?.Find("BodyLOD0")?.GetComponent<SkinnedMeshRenderer>();
+                            var bodyLod1 = forestGiantModel?.Find("BodyLOD1")?.GetComponent<SkinnedMeshRenderer>();
+                            var bodyLod2 = forestGiantModel?.Find("BodyLOD2")?.GetComponent<SkinnedMeshRenderer>();
+                            if (bodyLod0 != null) bodyLod0.enabled = false;
+                            if (bodyLod1 != null) bodyLod1.enabled = false;
+                            if (bodyLod2 != null) bodyLod2.enabled = false;
+                            ai.transform.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
+                                "SuikaGiant";
+                            var forestGiantMetaRig = forestGiantModel?.Find("AnimContainer").Find("metarig");
+                            if (forestGiantMetaRig == null) return;
+                            forestGiantMetaRig.name = "old-metarig";
+                            var suikaVisual = Object.Instantiate(TouhouEnemiesPlugin.SuikaVisuals);
+                            suikaVisual.transform.SetParent(ai.transform);
+                            suikaVisual.transform.localPosition = Vector3.zero;
+                            suikaVisual.transform.localRotation = Quaternion.identity;
+                            suikaVisual.transform.localScale = Vector3.one;
+                            var suikaMesh = suikaVisual.transform.Find("FGiantModelContainer/BodyLOD0");
+                            var suikaMetarig = suikaVisual.transform.Find("FGiantModelContainer/metarig");
+                            suikaMetarig.SetParent(forestGiantMetaRig.parent, true);
+                            suikaMetarig.transform.localScale = forestGiantMetaRig.transform.localScale;
+                            suikaMetarig.transform.localRotation = forestGiantMetaRig.transform.localRotation;
+                            suikaMetarig.transform.localPosition = forestGiantMetaRig.transform.localPosition;
+                            var suikaMeshRenderer = suikaMesh.GetComponent<SkinnedMeshRenderer>();
+                            suikaMeshRenderer.rootBone = suikaMetarig.transform.Find("spine");
+                            suikaMetarig.name = "metarig";
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"ForestGiant model changed.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"ForestGiant model changed.");
 
-                        var model = suikaVisual.transform.Find("FGiantModelContainer");
-                        ai.centerPosition.SetParent(model);
-                        var centerPosition = model.transform.Find("CenterPosition");
-                        ai.centerPosition.localScale = centerPosition.localScale;
-                        ai.centerPosition.localRotation = centerPosition.localRotation;
-                        ai.centerPosition.localPosition = centerPosition.localPosition;
+                            var model = suikaVisual.transform.Find("FGiantModelContainer");
+                            ai.centerPosition.SetParent(model);
+                            var centerPosition = model.transform.Find("CenterPosition");
+                            ai.centerPosition.localScale = centerPosition.localScale;
+                            ai.centerPosition.localRotation = centerPosition.localRotation;
+                            ai.centerPosition.localPosition = centerPosition.localPosition;
 
-                        ai.handBone =
-                            suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R");
+                            ai.handBone =
+                                suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R");
 
-                        ai.holdPlayerPoint.SetParent(ai.handBone);
-                        var holdPlayerPoint = ai.handBone.transform.Find("PlayerPoint");
-                        ai.holdPlayerPoint.localScale = holdPlayerPoint.localScale;
-                        ai.holdPlayerPoint.localRotation = holdPlayerPoint.localRotation;
-                        ai.holdPlayerPoint.localPosition = holdPlayerPoint.localPosition;
+                            ai.holdPlayerPoint.SetParent(ai.handBone);
+                            var holdPlayerPoint = ai.handBone.transform.Find("PlayerPoint");
+                            ai.holdPlayerPoint.localScale = holdPlayerPoint.localScale;
+                            ai.holdPlayerPoint.localRotation = holdPlayerPoint.localRotation;
+                            ai.holdPlayerPoint.localPosition = holdPlayerPoint.localPosition;
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"CenterPos: {ai.centerPosition != null}, " +
-                                                            $"HandBone: {ai.handBone != null}, " +
-                                                            $"HoldPoint: {ai.holdPlayerPoint != null}");
+                            TouhouEnemiesPlugin.Instance.AddLog($"CenterPos: {ai.centerPosition != null}, " +
+                                                                $"HandBone: {ai.handBone != null}, " +
+                                                                $"HoldPoint: {ai.holdPlayerPoint != null}");
 
-                        ai.reachForPlayerRig.data.root =
-                            suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R");
-                        ai.reachForPlayerRig.data.mid =
-                            suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R/forearm.R");
-                        ai.reachForPlayerRig.data.tip = ai.handBone;
+                            ai.reachForPlayerRig.data.root =
+                                suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R");
+                            ai.reachForPlayerRig.data.mid =
+                                suikaMetarig.transform.Find("spine/spine.003/shoulder.R/upper_arm.R/forearm.R");
+                            ai.reachForPlayerRig.data.tip = ai.handBone;
 
-                        /* This reset the state of the animator? I have no idea. It just works. */
-                        forestGiantAnimator.runtimeAnimatorController =
-                            new AnimatorOverrideController(originalController);
+                            /* This reset the state of the animator? I have no idea. It just works. */
+                            forestGiantAnimator.runtimeAnimatorController =
+                                new AnimatorOverrideController(originalController);
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator is reset.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator is reset.");
+                        }
+                        catch
+                        {
+                            TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace ForestGiant.");
+                        }
+
+                        break;
                     }
-                    catch
-                    {
-                        TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace ForestGiant.");
-                    }
-
-                    break;
-                }
                 case HoarderBugAI ai when TouhouEnemiesPlugin.MarisaVisuals != null &&
                                           TouhouEnemiesPlugin.EnableHoarderBugReplace.Value:
-                {
-                    try
                     {
-                        var bugAnimator = ai.GetComponentInChildren<Animator>();
-                        var originalController = bugAnimator.runtimeAnimatorController;
+                        try
+                        {
+                            var bugAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = bugAnimator.runtimeAnimatorController;
 
                             var hoarderBugModel = ai.transform.Find("HoarderBugModel");
-                        var cube = hoarderBugModel?.Find("Cube")?.GetComponent<SkinnedMeshRenderer>();
-                        var cube001 = hoarderBugModel?.Find("Cube.001")?.GetComponent<SkinnedMeshRenderer>();
-                        var leftWing = hoarderBugModel?.Find("AnimContainer/Armature/Abdomen/Chest/Head/LeftWing")
-                            ?.GetComponent<MeshRenderer>();
-                        var rightWing = hoarderBugModel?.Find("AnimContainer/Armature/Abdomen/Chest/Head/RightWing")
-                            ?.GetComponent<MeshRenderer>();
-                        if (cube != null) cube.enabled = false;
-                        if (cube001 != null) cube001.enabled = false;
-                        if (leftWing != null) leftWing.enabled = false;
-                        if (rightWing != null) rightWing.enabled = false;
-                        var hoarderBugArmature = hoarderBugModel?.Find("AnimContainer").Find("Armature");
-                        if (hoarderBugArmature == null) return;
-                        hoarderBugArmature.name = "old-Armature";
+                            var cube = hoarderBugModel?.Find("Cube")?.GetComponent<SkinnedMeshRenderer>();
+                            var cube001 = hoarderBugModel?.Find("Cube.001")?.GetComponent<SkinnedMeshRenderer>();
+                            var leftWing = hoarderBugModel?.Find("AnimContainer/Armature/Abdomen/Chest/Head/LeftWing")
+                                ?.GetComponent<MeshRenderer>();
+                            var rightWing = hoarderBugModel?.Find("AnimContainer/Armature/Abdomen/Chest/Head/RightWing")
+                                ?.GetComponent<MeshRenderer>();
+                            if (cube != null) cube.enabled = false;
+                            if (cube001 != null) cube001.enabled = false;
+                            if (leftWing != null) leftWing.enabled = false;
+                            if (rightWing != null) rightWing.enabled = false;
+                            var hoarderBugArmature = hoarderBugModel?.Find("AnimContainer").Find("Armature");
+                            if (hoarderBugArmature == null) return;
+                            hoarderBugArmature.name = "old-Armature";
 
-                        var bugSpawn = Random.Range(0, 10);
-                        if (TouhouEnemiesPlugin.BugSpawnRate.Value < bugSpawn + 1)
-                        {
-                            var hoarderBugAnimator = hoarderBugModel?.Find("AnimContainer").GetComponent<Animator>();
-                            if (hoarderBugAnimator != null) hoarderBugAnimator.enabled = false;
+                            var bugSpawn = Random.Range(0, 10);
+                            if (TouhouEnemiesPlugin.BugSpawnRate.Value < bugSpawn + 1)
+                            {
+                                var hoarderBugAnimator = hoarderBugModel?.Find("AnimContainer").GetComponent<Animator>();
+                                if (hoarderBugAnimator != null) hoarderBugAnimator.enabled = false;
 
                                 ai.transform.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "HoarderMarisa";
-                            var marisaVisual = Object.Instantiate(TouhouEnemiesPlugin.MarisaVisuals);
+                                var marisaVisual = Object.Instantiate(TouhouEnemiesPlugin.MarisaVisuals);
 
-                            var marisaAnimator =
-                                marisaVisual.transform.Find("HoarderBugModel").GetComponent<Animator>();
-                            ai.creatureAnimator = marisaAnimator;
+                                var marisaAnimator =
+                                    marisaVisual.transform.Find("HoarderBugModel").GetComponent<Animator>();
+                                ai.creatureAnimator = marisaAnimator;
 
-                            marisaVisual.transform.SetParent(ai.transform);
-                            marisaVisual.transform.localPosition = Vector3.zero;
-                            marisaVisual.transform.localRotation = Quaternion.identity;
-                            marisaVisual.transform.localScale = Vector3.one;
-                            var marisaMesh = marisaVisual.transform.Find("HoarderBugModel/Cube");
-                            var marisaArmature = marisaVisual.transform.Find("HoarderBugModel/Armature");
-                            marisaArmature.SetParent(hoarderBugArmature.parent, true);
-                            marisaArmature.transform.localScale = Vector3.one;
-                            marisaArmature.transform.localRotation = hoarderBugArmature.transform.localRotation;
-                            marisaArmature.transform.localPosition = hoarderBugArmature.transform.localPosition;
-                            var marisaMeshRenderer = marisaMesh.GetComponent<SkinnedMeshRenderer>();
-                            marisaMeshRenderer.rootBone = marisaArmature.transform.Find("Abdomen");
-                            marisaArmature.name = "Armature";
+                                marisaVisual.transform.SetParent(ai.transform);
+                                marisaVisual.transform.localPosition = Vector3.zero;
+                                marisaVisual.transform.localRotation = Quaternion.identity;
+                                marisaVisual.transform.localScale = Vector3.one;
+                                var marisaMesh = marisaVisual.transform.Find("HoarderBugModel/Cube");
+                                var marisaArmature = marisaVisual.transform.Find("HoarderBugModel/Armature");
+                                marisaArmature.SetParent(hoarderBugArmature.parent, true);
+                                marisaArmature.transform.localScale = Vector3.one;
+                                marisaArmature.transform.localRotation = hoarderBugArmature.transform.localRotation;
+                                marisaArmature.transform.localPosition = hoarderBugArmature.transform.localPosition;
+                                var marisaMeshRenderer = marisaMesh.GetComponent<SkinnedMeshRenderer>();
+                                marisaMeshRenderer.rootBone = marisaArmature.transform.Find("Abdomen");
+                                marisaArmature.name = "Armature";
 
-                            TouhouEnemiesPlugin.Instance.AddLog($"HoarderBug model changed.");
+                                TouhouEnemiesPlugin.Instance.AddLog($"HoarderBug model changed.");
 
-                            var spine = marisaArmature.transform.Find("Abdomen/Spine");
-                            ai.grabTarget.SetParent(spine);
-                            var grabTarget = spine.transform.Find("HoldItemsTarget");
-                            ai.grabTarget.localScale = grabTarget.localScale;
-                            ai.grabTarget.localRotation = grabTarget.localRotation;
-                            ai.grabTarget.localPosition = grabTarget.localPosition;
+                                var spine = marisaArmature.transform.Find("Abdomen/Spine");
+                                ai.grabTarget.SetParent(spine);
+                                var grabTarget = spine.transform.Find("HoldItemsTarget");
+                                ai.grabTarget.localScale = grabTarget.localScale;
+                                ai.grabTarget.localRotation = grabTarget.localRotation;
+                                ai.grabTarget.localPosition = grabTarget.localPosition;
 
-                            TouhouEnemiesPlugin.Instance.AddLog($"GrabTarget: {ai.grabTarget != null}");
+                                TouhouEnemiesPlugin.Instance.AddLog($"GrabTarget: {ai.grabTarget != null}");
 
-                            TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
+                                TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
+                            }
+                            else
+                            {
+                                ai.transform.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
+                                    "KirisameBug";
+                                var bugVisuals = Object.Instantiate(TouhouEnemiesPlugin.BugVisuals);
+                                bugVisuals.transform.SetParent(ai.transform);
+                                bugVisuals.transform.localPosition = Vector3.zero;
+                                bugVisuals.transform.localRotation = Quaternion.identity;
+                                bugVisuals.transform.localScale = Vector3.one;
+                                var bugMesh = bugVisuals.transform.Find("AnimContainer/Cube");
+                                var bugArmature = bugVisuals.transform.Find("AnimContainer/Armature");
+                                bugArmature.SetParent(hoarderBugArmature.parent, true);
+                                bugArmature.transform.localScale = Vector3.one;
+                                bugArmature.transform.localRotation = hoarderBugArmature.transform.localRotation;
+                                bugArmature.transform.localPosition = hoarderBugArmature.transform.localPosition;
+                                var bugMeshRenderer = bugMesh.GetComponent<SkinnedMeshRenderer>();
+                                bugMeshRenderer.rootBone = bugArmature.transform.Find("Abdomen");
+                                bugArmature.name = "Armature";
+
+                                TouhouEnemiesPlugin.Instance.AddLog($"HoarderBug model changed.");
+
+                                var spine = bugArmature.transform.Find("Abdomen/Spine");
+                                ai.grabTarget.SetParent(spine);
+                                var grabTarget = spine.transform.Find("HoldItemsTarget");
+                                ai.grabTarget.localScale = grabTarget.localScale;
+                                ai.grabTarget.localRotation = grabTarget.localRotation;
+                                ai.grabTarget.localPosition = grabTarget.localPosition;
+
+                                TouhouEnemiesPlugin.Instance.AddLog($"GrabTarget: {ai.grabTarget != null}");
+
+                                bugAnimator.runtimeAnimatorController =
+                                    new AnimatorOverrideController(originalController);
+
+                                TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
+                            }
                         }
-                        else
+                        catch
                         {
-                            ai.transform.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
-                                "KirisameBug";
-                            var bugVisuals = Object.Instantiate(TouhouEnemiesPlugin.BugVisuals);
-                            bugVisuals.transform.SetParent(ai.transform);
-                            bugVisuals.transform.localPosition = Vector3.zero;
-                            bugVisuals.transform.localRotation = Quaternion.identity;
-                            bugVisuals.transform.localScale = Vector3.one;
-                            var bugMesh = bugVisuals.transform.Find("AnimContainer/Cube");
-                            var bugArmature = bugVisuals.transform.Find("AnimContainer/Armature");
-                            bugArmature.SetParent(hoarderBugArmature.parent, true);
-                            bugArmature.transform.localScale = Vector3.one;
-                            bugArmature.transform.localRotation = hoarderBugArmature.transform.localRotation;
-                            bugArmature.transform.localPosition = hoarderBugArmature.transform.localPosition;
-                            var bugMeshRenderer = bugMesh.GetComponent<SkinnedMeshRenderer>();
-                            bugMeshRenderer.rootBone = bugArmature.transform.Find("Abdomen");
-                            bugArmature.name = "Armature";
-
-                            TouhouEnemiesPlugin.Instance.AddLog($"HoarderBug model changed.");
-
-                            var spine = bugArmature.transform.Find("Abdomen/Spine");
-                            ai.grabTarget.SetParent(spine);
-                            var grabTarget = spine.transform.Find("HoldItemsTarget");
-                            ai.grabTarget.localScale = grabTarget.localScale;
-                            ai.grabTarget.localRotation = grabTarget.localRotation;
-                            ai.grabTarget.localPosition = grabTarget.localPosition;
-
-                            TouhouEnemiesPlugin.Instance.AddLog($"GrabTarget: {ai.grabTarget != null}");
-
-                            bugAnimator.runtimeAnimatorController =
-                                new AnimatorOverrideController(originalController);
-
-                            TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace HoarderBug.");
                         }
-                    }
-                    catch
-                    {
-                        TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace HoarderBug.");
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 case SandWormAI ai when TouhouEnemiesPlugin.YuyukoVisuals != null &&
                                         TouhouEnemiesPlugin.EnableSandWormReplace.Value:
-                {
-                    try
                     {
-                        var sandWormAnimator = ai.GetComponentInChildren<Animator>();
-                        var originalController = sandWormAnimator.runtimeAnimatorController;
+                        try
+                        {
+                            var sandWormAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = sandWormAnimator.runtimeAnimatorController;
 
-                        var meshContainer = ai.transform.Find("MeshContainer");
-                        var renderer = meshContainer?.Find("Renderer")?.GetComponent<SkinnedMeshRenderer>();
-                        if (renderer != null) renderer.enabled = false;
-                        var sandWormBone = meshContainer?.Find("Armature").Find("Bone");
-                        if (sandWormBone == null) return;
-                        sandWormBone.name = "old-Bone";
-                        var yuyukoVisual = Object.Instantiate(TouhouEnemiesPlugin.YuyukoVisuals);
-                        yuyukoVisual.transform.SetParent(ai.transform);
-                        yuyukoVisual.transform.localPosition = Vector3.zero;
-                        yuyukoVisual.transform.localRotation = Quaternion.identity;
-                        yuyukoVisual.transform.localScale = Vector3.one;
-                        var yuyukoMesh = yuyukoVisual.transform.Find("MeshContainer");
-                        var yuyukoRenderer = yuyukoMesh.transform.Find("Renderer");
-                        var yuyukoBone = yuyukoMesh.transform.Find("Armature").Find("Bone");
-                        yuyukoBone.SetParent(sandWormBone.parent, true);
-                        yuyukoBone.transform.localScale = sandWormBone.transform.localScale;
-                        yuyukoBone.transform.localRotation = sandWormBone.transform.localRotation;
-                        yuyukoBone.transform.localPosition = sandWormBone.transform.localPosition;
+                            var meshContainer = ai.transform.Find("MeshContainer");
+                            var renderer = meshContainer?.Find("Renderer")?.GetComponent<SkinnedMeshRenderer>();
+                            if (renderer != null) renderer.enabled = false;
+                            var sandWormBone = meshContainer?.Find("Armature").Find("Bone");
+                            if (sandWormBone == null) return;
+                            sandWormBone.name = "old-Bone";
+                            var yuyukoVisual = Object.Instantiate(TouhouEnemiesPlugin.YuyukoVisuals);
+                            yuyukoVisual.transform.SetParent(ai.transform);
+                            yuyukoVisual.transform.localPosition = Vector3.zero;
+                            yuyukoVisual.transform.localRotation = Quaternion.identity;
+                            yuyukoVisual.transform.localScale = Vector3.one;
+                            var yuyukoMesh = yuyukoVisual.transform.Find("MeshContainer");
+                            var yuyukoRenderer = yuyukoMesh.transform.Find("Renderer");
+                            var yuyukoBone = yuyukoMesh.transform.Find("Armature").Find("Bone");
+                            yuyukoBone.SetParent(sandWormBone.parent, true);
+                            yuyukoBone.transform.localScale = sandWormBone.transform.localScale;
+                            yuyukoBone.transform.localRotation = sandWormBone.transform.localRotation;
+                            yuyukoBone.transform.localPosition = sandWormBone.transform.localPosition;
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"SandWorm model changed.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"SandWorm model changed.");
 
-                        var yuyukoBone002 = yuyukoBone.transform.Find("Bone.001/Bone.003/Bone.002");
-                        var sandWormCollider = sandWormBone.transform.Find("Bone.001/Bone.003/Bone.002/Collider");
-                        var sandWormVoice = sandWormBone.transform.Find("Bone.001/Bone.003/Bone.002/VoiceAudio");
-                        var sandWormScanNode = sandWormBone.transform.Find("Bone.001/Bone.003/Bone.002/ScanNode");
-                        sandWormScanNode.gameObject.GetComponent<ScanNodeProperties>().headerText = "EaterYuyuko";
-                        sandWormCollider.SetParent(yuyukoBone002);
-                        sandWormVoice.SetParent(yuyukoBone002);
-                        sandWormScanNode.SetParent(yuyukoBone002);
+                            var yuyukoBone002 = yuyukoBone.transform.Find("Bone.001/Bone.003/Bone.002");
+                            var sandWormCollider = sandWormBone.transform.Find("Bone.001/Bone.003/Bone.002/Collider");
+                            var sandWormVoice = sandWormBone.transform.Find("Bone.001/Bone.003/Bone.002/VoiceAudio");
+                            var sandWormScanNode = sandWormBone.transform.Find("Bone.001/Bone.003/Bone.002/ScanNode");
+                            sandWormScanNode.gameObject.GetComponent<ScanNodeProperties>().headerText = "EaterYuyuko";
+                            sandWormCollider.SetParent(yuyukoBone002);
+                            sandWormVoice.SetParent(yuyukoBone002);
+                            sandWormScanNode.SetParent(yuyukoBone002);
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"Collider: {sandWormCollider != null}, " +
-                                                            $"Voice: {sandWormVoice != null}, " +
-                                                            $"ScanNode: {sandWormScanNode != null}");
+                            TouhouEnemiesPlugin.Instance.AddLog($"Collider: {sandWormCollider != null}, " +
+                                                                $"Voice: {sandWormVoice != null}, " +
+                                                                $"ScanNode: {sandWormScanNode != null}");
 
-                        /* This is reset. the state of the animator? I have no idea. It just works. */
-                        sandWormAnimator.runtimeAnimatorController =
-                            new AnimatorOverrideController(originalController);
+                            /* This is reset. the state of the animator? I have no idea. It just works. */
+                            sandWormAnimator.runtimeAnimatorController =
+                                new AnimatorOverrideController(originalController);
 
-                        TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator reset.");
+                            TouhouEnemiesPlugin.Instance.AddLog($"The state of the animator reset.");
+                        }
+                        catch
+                        {
+                            TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace SandWorm.");
+                        }
+
+                        break;
                     }
-                    catch
-                    {
-                        TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace SandWorm.");
-                    }
-
-                    break;
-                }
             }
         }
 
@@ -537,30 +537,30 @@ namespace TouhouEnemyModels
                     TouhouEnemiesPlugin.Instance.AddLog($"Stop Suika theme.");
                     break;
                 case 1:
-                {
-                    if (__instance.creatureSFX.clip != TouhouEnemiesPlugin.SuikaTheme)
                     {
-                        __instance.creatureSFX.clip = TouhouEnemiesPlugin.SuikaTheme;
-                        __instance.creatureSFX.volume = TouhouEnemiesPlugin.SuikaThemeVolume.Value;
-                        __instance.creatureSFX.loop = true;
-                        __instance.creatureSFX.spatialBlend = 1;
-                    }
+                        if (__instance.creatureSFX.clip != TouhouEnemiesPlugin.SuikaTheme)
+                        {
+                            __instance.creatureSFX.clip = TouhouEnemiesPlugin.SuikaTheme;
+                            __instance.creatureSFX.volume = TouhouEnemiesPlugin.SuikaThemeVolume.Value;
+                            __instance.creatureSFX.loop = true;
+                            __instance.creatureSFX.spatialBlend = 1;
+                        }
 
-                    if (__instance.creatureSFX.isPlaying)
-                    {
-                        __instance.creatureSFX.UnPause();
-                    }
-                    else
-                    {
-                        __instance.creatureSFX.Play();
-                    }
+                        if (__instance.creatureSFX.isPlaying)
+                        {
+                            __instance.creatureSFX.UnPause();
+                        }
+                        else
+                        {
+                            __instance.creatureSFX.Play();
+                        }
 
-                    WalkieTalkie.TransmitOneShotAudio(__instance.creatureSFX, TouhouEnemiesPlugin.SuikaTheme,
-                        TouhouEnemiesPlugin.SuikaThemeVolume.Value / 2);
+                        WalkieTalkie.TransmitOneShotAudio(__instance.creatureSFX, TouhouEnemiesPlugin.SuikaTheme,
+                            TouhouEnemiesPlugin.SuikaThemeVolume.Value / 2);
 
-                    TouhouEnemiesPlugin.Instance.AddLog($"Playing Suika theme.");
-                    break;
-                }
+                        TouhouEnemiesPlugin.Instance.AddLog($"Playing Suika theme.");
+                        break;
+                    }
                 case 2:
                     __instance.creatureSFX.Pause();
                     TouhouEnemiesPlugin.Instance.AddLog($"Pause Suika theme.");
@@ -778,45 +778,43 @@ namespace TouhouEnemyModels
             {
                 switch (__instance)
                 {
-                    case RadMechAI ai when TouhouEnemiesPlugin.SekiVisuals != null &&
-                                           TouhouEnemiesPlugin.EnableCoilHeadReplace.Value:
+                    case RadMechAI ai when TouhouEnemiesPlugin.UtsuhoVisuals != null &&
+                                           TouhouEnemiesPlugin.EnableRadMechReplace.Value:
                         try
                         {
                             var radMechMesh = ai.transform.Find("MeshContainer");
-                            var body = radMechMesh?.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
+                            if(radMechMesh == null) return;
+                            var radMechAnimator = ai.GetComponentInChildren<Animator>();
+                            var originalController = radMechAnimator.runtimeAnimatorController;
+
+                            var body = radMechMesh.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
                             radMechMesh.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "OldUtsuho";
-                            var radMechMetaRig = radMechMesh?.Find("AnimContainer").Find("metarig");
+                            var radMechMetaRig = radMechMesh.Find("AnimContainer").Find("metarig");
                             if (radMechMetaRig == null) return;
-                            var radMechAnimator = radMechMesh?.Find("AnimContainer").GetComponent<Animator>();
-                            if (radMechAnimator != null) radMechAnimator.enabled = false;
                             radMechMetaRig.name = "old-metarig";
 
                             var utsuhoVisual = Object.Instantiate(TouhouEnemiesPlugin.UtsuhoVisuals);
-                            utsuhoVisual.transform.SetParent(radMechMesh);
+                            utsuhoVisual.transform.SetParent(ai.transform);
                             utsuhoVisual.transform.localPosition = Vector3.zero;
                             utsuhoVisual.transform.localRotation = Quaternion.identity;
                             utsuhoVisual.transform.localScale = Vector3.one;
 
-                            var utsuhoMesh = utsuhoVisual.transform.Find("MeshContainer/Body");
-                            var utsuhoMetarig = utsuhoVisual.transform.Find("MeshContainer/Armature/metarig");
+                            var armature = utsuhoVisual.transform.Find("MeshContainer/AnimContainer");
+                            var utsuhoMetarig = armature.transform.Find("metarig");
                             utsuhoMetarig.SetParent(radMechMetaRig.parent, true);
                             utsuhoMetarig.transform.localScale = radMechMetaRig.transform.localScale;
                             utsuhoMetarig.transform.localRotation = radMechMetaRig.transform.localRotation;
                             utsuhoMetarig.transform.localPosition = radMechMetaRig.transform.localPosition;
-                            var component = utsuhoMesh.GetComponent<SkinnedMeshRenderer>();
-                            component.rootBone = utsuhoMetarig;
-                            utsuhoMetarig.name = "metarig";
 
                             TouhouEnemiesPlugin.Instance.AddLog($"RadMech model changed.");
-
 
                             //ai.ownCollider = utsuhoVisual.GetComponent<Collider>();
 
                             ai.torsoContainer = utsuhoMetarig.transform.Find("TorsoContainer");
 
                             ai.torsoDefaultRotation.SetParent(utsuhoMetarig);
-                            var torsoDefaultRotation = utsuhoMetarig.transform.Find("TorsoDefaultRotation");
+                            var torsoDefaultRotation = utsuhoMetarig.transform.Find("TorsoDefaultRotation0");
                             ai.torsoDefaultRotation.localScale = torsoDefaultRotation.localScale;
                             ai.torsoDefaultRotation.localRotation = torsoDefaultRotation.localRotation;
                             ai.torsoDefaultRotation.localPosition = torsoDefaultRotation.localPosition;
@@ -831,10 +829,12 @@ namespace TouhouEnemyModels
                             var creature = radMechMetaRig.transform.Find("CreatureSFX");
                             creature.SetParent(utsuhoMetarig);
 
-                            var torso = utsuhoMetarig.transform.Find("TorsoContainer/Torso");
                             var radTorso = radMechMetaRig.transform.Find("TorsoContainer/Torso");
+                            var radEye = radTorso.transform.Find("FlyingModeEye");
                             var radLightContainer = radTorso.transform.Find("LightContainer");
                             var spotlightOn = radTorso.transform.Find("SpotlightOnAudio");
+                            var torso = utsuhoMetarig.transform.Find("TorsoContainer/Torso");
+                            radEye.SetParent(torso);
                             radLightContainer.SetParent(torso);
                             spotlightOn.SetParent(torso);
                             TouhouEnemiesPlugin.Instance.AddLog($"Collider: {ai.ownCollider != null}, " +
@@ -868,7 +868,7 @@ namespace TouhouEnemyModels
                             TouhouEnemiesPlugin.Instance.AddLog($"RightFoot: {ai.rightFootPoint != null}");
 
                             var leftUpperArm = torso.transform.Find("LeftUpperArm");
-                            var gunArmDefaultRot = leftUpperArm.transform.Find("GunArmDefaultRot");
+                            var gunArmDefaultRot = leftUpperArm.transform.Find("GunArmDefaultRot0");
                             var radLeftUpperArm = radTorso.transform.Find("LeftUpperArm");
                             var radGunArmContainer = radLeftUpperArm.transform.Find("GunArmContainer");
                             var radLeftLowerArm = radGunArmContainer.transform.Find("LeftLowerArm");
@@ -877,11 +877,8 @@ namespace TouhouEnemyModels
                             ai.defaultArmRotation.localRotation = gunArmDefaultRot.localRotation;
                             ai.defaultArmRotation.localPosition = gunArmDefaultRot.localPosition;
                             TouhouEnemiesPlugin.Instance.AddLog($"GunArmRotation: {ai.defaultArmRotation != null}");
-                            ai.gunArm.SetParent(leftUpperArm);
                             var gunArmContainer = leftUpperArm.transform.Find("GunArmContainer");
-                            ai.gunArm.localScale = gunArmContainer.localScale;
-                            ai.gunArm.localRotation = gunArmContainer.localRotation;
-                            ai.gunArm.localPosition = gunArmContainer.localPosition;
+                            ai.gunArm = gunArmContainer;
                             TouhouEnemiesPlugin.Instance.AddLog($"GunArm: {ai.gunArm != null}");
                             var leftLowerArm = gunArmContainer.transform.Find("LeftLowerArm");
                             var blastParticle = radLeftLowerArm.transform.Find("BlastParticle");
@@ -894,7 +891,7 @@ namespace TouhouEnemyModels
                             blowtorchAudio.SetParent(leftLowerArm);
                             flamethrower.SetParent(leftLowerArm);
                             ai.gunPoint.SetParent(leftLowerArm);
-                            var gunPoint = leftLowerArm.transform.Find("GunPoint");
+                            var gunPoint = leftLowerArm.transform.Find("GunPoint0");
                             ai.gunPoint.localScale = gunPoint.localScale;
                             ai.gunPoint.localRotation = gunPoint.localRotation;
                             ai.gunPoint.localPosition = gunPoint.localPosition;
@@ -902,7 +899,7 @@ namespace TouhouEnemyModels
 
                             var rightLowerArm = torso.transform.Find("RightUpperArm/RightLowerarm");
                             ai.holdPlayerPoint.SetParent(rightLowerArm);
-                            var holdPlayerPoint = rightLowerArm.transform.Find("GrabPlayerPoint");
+                            var holdPlayerPoint = rightLowerArm.transform.Find("GrabPlayerPoint0");
                             ai.holdPlayerPoint.localScale = holdPlayerPoint.localScale;
                             ai.holdPlayerPoint.localRotation = holdPlayerPoint.localRotation;
                             ai.holdPlayerPoint.localPosition = holdPlayerPoint.localPosition;
@@ -915,15 +912,34 @@ namespace TouhouEnemyModels
 
                             TouhouEnemiesPlugin.Instance.AddLog($"HoldPoint: {ai.holdPlayerPoint != null}");
 
-                            var utsuhoAnimator = utsuhoVisual.transform.Find("MeshContainer/Armature")
-                                .GetComponent<Animator>();
-                            ai.creatureAnimator = utsuhoAnimator;
+                            var utsuhoAnimator = armature.transform.GetComponent<Animator>();
+                            AnimatorOverrideController overrideController = new(originalController);
+
+                            Dictionary<string, AnimationClip> replacementClips = [];
+                            foreach (var clip in utsuhoAnimator.runtimeAnimatorController.animationClips)
+                            {
+                                replacementClips[clip.name] = clip;
+                                //TouhouEnemiesPlugin.Instance.AddLog($"Get clip: {clip.name}");
+                            }
+
+                            utsuhoAnimator.enabled = false;
+                            List<KeyValuePair<AnimationClip, AnimationClip>> overrides = [];
+                            overrideController.GetOverrides(overrides);
+
+                            for (var i = 0; i < overrides.Count; i++)
+                            {
+                                var originalClip = overrides[i].Key;
+                                if (!replacementClips.TryGetValue(originalClip.name, out var newClip)) continue;
+                                overrides[i] = new KeyValuePair<AnimationClip, AnimationClip>(originalClip, newClip);
+                                //TouhouEnemiesPlugin.Instance.AddLog($"Replace clip: {newClip.name}");
+                            }
+                            overrideController.ApplyOverrides(overrides);
+                            radMechAnimator.runtimeAnimatorController = overrideController;
 
                             TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
 
 
-                            if (!TouhouEnemiesPlugin.EnableRadMechReplace.Value ||
-                                !TouhouEnemiesPlugin.EnableUtsuhoTheme.Value ||
+                            if (!TouhouEnemiesPlugin.EnableUtsuhoTheme.Value ||
                                 TouhouEnemiesPlugin.UtsuhoTheme == null) return;
                             ai.LocalLRADAudio.clip = TouhouEnemiesPlugin.UtsuhoTheme;
                             ai.creatureSFX.volume = TouhouEnemiesPlugin.UtsuhoSFXVolume.Value;
@@ -949,9 +965,10 @@ namespace TouhouEnemyModels
         [HarmonyPostfix]
         public static void ReplaceUtsuhoSpawnNest(RoundManager __instance, EnemyType enemyType)
         {
-            if (enemyType.enemyName != "RadMech" || TouhouEnemiesPlugin.UtsuhoNestSpawnVisuals == null) return;
+            if (enemyType.enemyName != "RadMech" || TouhouEnemiesPlugin.UtsuhoNestSpawnVisuals == null || !TouhouEnemiesPlugin.EnableRadMechReplace.Value) return;
             var radMechMesh = __instance.enemyNestSpawnObjects.Last().transform.Find("MeshContainer");
-            var body = radMechMesh?.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
+            if (radMechMesh == null) return;
+            var body = radMechMesh.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
             if (body != null) body.enabled = false;
             radMechMesh.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
                 "Old-Bird Utsuho";

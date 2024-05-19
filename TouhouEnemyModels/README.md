@@ -31,12 +31,16 @@ Original work: **東方Project** by **上海アリス幻樂団**
 
 ## Issues
 
-1. At v0.9.2, client player cannot kill HoarderBugs. **Fixed at v0.9.3.**
-2. Dead enemies looks still alive for later-join players. **Not gonna fix.**
-3. Volume configs for NutCracker and OldBird not working. **Not gonna fix.**
-4. Clothes and hair are solid. [JigglePhysicsPlugin](https://thunderstore.io/c/lethal-company/p/HGG/JigglePhysicsPlugin/) may helps, but not fixing at this time. **Jiggle physics added at v0.9.6.**
-5. Starry texture for Utsuho's cloak. Might be fixed in the future, not sure of that.
-6. The model meshes are becoming too large for a single mod. Trying to reduce the size. **Done.**
+1. ✅At v0.9.2, client player cannot kill HoarderBugs. **Fixed at v0.9.3.**
+2. ❌Dead enemies looks still alive for later-join players. **Not gonna fix.**
+3. ❌Volume configs for NutCracker and OldBird not working. **Not gonna fix.**
+4. ✅Clothes and hair are solid. [JigglePhysicsPlugin](https://thunderstore.io/c/lethal-company/p/HGG/JigglePhysicsPlugin/) may helps, but not fixing at this time. **Jiggle physics added at v0.9.6.**
+5. ❌Starry texture for Utsuho's cloak. Might be fixed in the future, not sure of that.
+6. ✅The model meshes are becoming too large for a single mod. Trying to reduce the size. **Done.**
+7. ℹ️Old-Bird **stops moving** if its **target(including giants)** is eaten by a **Sandworm** while attacking. **Not caused by this mod.**
+8. ℹ️Old-Bird **stops moving** if a player is **grabbed** by Old-Bird but **not killed** by its flame. This **can be fixed** with a single **touch** to the Old-Bird from a player. **Not caused by this mod.**
+9. ℹ️The missiles launched by **Utsuho** had 30%-50% of the **hit rate** of Old-Birds. This can be fixed, but it **makes sense** considering that Utsuho is not very smart. It also makes life easier.
+
 
 * Others:
 

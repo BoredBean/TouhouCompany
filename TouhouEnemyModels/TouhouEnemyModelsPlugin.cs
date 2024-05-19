@@ -129,7 +129,7 @@ namespace TouhouEnemyModels
             MarisaVoiceVolume = Config.Bind("4.HoarderBug", "MarisaVoiceVolume(0.0-1.0)", 1f,
                 "Config the volume of Marisa's voice.");
 
-            EnableRadMechReplace = Config.Bind("5.RadMech", "EnableRadMech", false,
+            EnableRadMechReplace = Config.Bind("5.RadMech", "EnableRadMech", true,
                 "Replace the model of RadMech to UtsuhoMech.");
             EnableUtsuhoTheme = Config.Bind("5.RadMech", "EnableUtsuhoTheme", true,
                 "Play Utsuho's theme music.");
