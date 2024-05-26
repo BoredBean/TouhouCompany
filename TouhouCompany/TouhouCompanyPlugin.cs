@@ -25,16 +25,19 @@ namespace TouhouCompany
         public static GameObject ShanghaiVisuals;
         internal static ConfigEntry<bool> EnableShanghaiReplace;
 
-        public static GameObject HakureiVisuals;
-        internal static ConfigEntry<bool> EnableHakureiReplace;
-        public static GameObject SkyBoxVisuals;
-        internal static ConfigEntry<bool> EnableSkyBoxReplace;
-
         public static GameObject MoriyaVisuals;
         public static AudioClip NitoriTheme;
         internal static ConfigEntry<bool> EnableMoriyaReplace;
         internal static ConfigEntry<bool> EnableNitoriTheme;
         internal static ConfigEntry<float> NitoriThemeVolume;
+
+        public static GameObject HakureiVisuals;
+        internal static ConfigEntry<bool> EnableHakureiReplace;
+        public static GameObject SkyBoxVisuals;
+        internal static ConfigEntry<bool> EnableSkyBoxReplace;
+
+        public static GameObject KoumakanVisuals;
+        internal static ConfigEntry<bool> EnableKoumakanReplace;
 
         private void Awake()
         {
@@ -56,17 +59,20 @@ namespace TouhouCompany
             EnableShanghaiReplace = Config.Bind("2.PJMan", "EnableShanghaiReplace", true,
                 "Replace the PJMan with 上海人形.");
 
-            EnableHakureiReplace = Config.Bind("3.CompanyBuilding", "EnableHakureiReplace", true,
+            EnableMoriyaReplace = Config.Bind("3.ItemShip", "EnableMoriyaReplace", true,
+                "Replace the Item Ship with Moriya Shrine.");
+            EnableNitoriTheme = Config.Bind("3.ItemShip", "EnableNitoriTheme", true,
+                """Replace the default music to Nitori's theme music.""");
+            NitoriThemeVolume = Config.Bind("3.ItemShip", "NitoriThemeVolume(0.0-1.0)", 1f,
+                """Config the volume of Nitori's theme music.""");
+
+            EnableHakureiReplace = Config.Bind("4.CompanyBuilding", "EnableHakureiReplace", true,
                 "Replace the Company Building with Hakurei Shrine.");
-            EnableSkyBoxReplace = Config.Bind("3.CompanyBuilding", "EnableSkyBoxReplace", true,
+            EnableSkyBoxReplace = Config.Bind("4.CompanyBuilding", "EnableSkyBoxReplace", true,
                 "Replace the SkyBox.");
 
-            EnableMoriyaReplace = Config.Bind("4.ItemShip", "EnableMoriyaReplace", true,
-                "Replace the Item Ship with Moriya Shrine.");
-            EnableNitoriTheme = Config.Bind("4.ItemShip", "EnableNitoriTheme", true,
-                """Replace the default music to Nitori's theme music.""");
-            NitoriThemeVolume = Config.Bind("4.ItemShip", "NitoriThemeVolume(0.0-1.0)", 1f,
-                """Config the volume of Nitori's theme music.""");
+            EnableKoumakanReplace = Config.Bind("5.March", "EnableKoumakanReplace", true,
+                "Replace the March Building with Koumakan.");
 
             Logger.LogInfo("Patching all functions.");
 
@@ -102,6 +108,18 @@ namespace TouhouCompany
                     Logger.LogInfo($"Load Shanghai: {ShanghaiVisuals != null}");
                 }
 
+                if (EnableMoriyaReplace.Value)
+                {
+                    MoriyaVisuals = bundle.LoadAsset<GameObject>("守矢.prefab");
+                    Logger.LogInfo($"Load Moriya: {MoriyaVisuals != null}");
+
+                    if (EnableNitoriTheme.Value)
+                    {
+                        NitoriTheme = bundle.LoadAsset<AudioClip>("Nitori.mp3");
+                        Logger.LogInfo($"Load NitoriTheme: {NitoriTheme != null}");
+                    }
+                }
+
                 if (EnableHakureiReplace.Value)
                 {
                     HakureiVisuals = bundle.LoadAsset<GameObject>("Shrine.prefab");
@@ -113,16 +131,10 @@ namespace TouhouCompany
                     }
                 }
 
-                if (EnableMoriyaReplace.Value)
+                if (EnableKoumakanReplace.Value)
                 {
-                    MoriyaVisuals = bundle.LoadAsset<GameObject>("守矢.prefab");
-                    Logger.LogInfo($"Load Moriya: {MoriyaVisuals != null}");
-
-                    if (EnableNitoriTheme.Value)
-                    {
-                        NitoriTheme = bundle.LoadAsset<AudioClip>("Nitori.mp3");
-                        Logger.LogInfo($"Load NitoriTheme: {NitoriTheme != null}");
-                    }
+                    KoumakanVisuals = bundle.LoadAsset<GameObject>("Koumakan.prefab");
+                    Logger.LogInfo($"Load Koumakan: {KoumakanVisuals != null}");
                 }
             }
             catch (Exception ex)

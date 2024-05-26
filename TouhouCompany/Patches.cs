@@ -180,138 +180,227 @@ namespace TouhouCompany
         [HarmonyPrefix, HarmonyPatch(typeof(RoundManager), "LoadNewLevelWait")]
         public static void LoadNewLevelWaitPatch(RoundManager __instance)
         {
-            if (__instance.currentLevel.levelID != 3 || !TouhouCompanyPlugin.EnableHakureiReplace.Value ||
-                TouhouCompanyPlugin.HakureiVisuals == null) return;
+            if (__instance.currentLevel.levelID == 3 && TouhouCompanyPlugin.EnableHakureiReplace.Value &&
+                TouhouCompanyPlugin.HakureiVisuals != null) try
+                {
+                    var sceneByName = SceneManager.GetSceneByName("CompanyBuilding");
+                    var rootGameObjects = sceneByName.GetRootGameObjects();
+
+                    Transform bellTrigger = null;
+
+                    foreach (var rootObj in rootGameObjects)
+                    {
+                        TouhouCompanyPlugin.Instance.AddLog($"Processing {rootObj.name} on {sceneByName}.");
+                        switch (rootObj.name)
+                        {
+                            case "Systems":
+                                {
+                                    if (TouhouCompanyPlugin.EnableSkyBoxReplace.Value && TouhouCompanyPlugin.SkyBoxVisuals != null)
+                                    {
+                                        var renderingObject = rootObj.transform.Find("Rendering");
+                                        var skyBox = Object.Instantiate(TouhouCompanyPlugin.SkyBoxVisuals);
+                                        skyBox.transform.SetParent(renderingObject);
+                                        skyBox.transform.localPosition = Vector3.zero;
+                                        skyBox.transform.localRotation = Quaternion.identity;
+                                        skyBox.transform.localScale = Vector3.one * 0.1f;
+                                        TouhouCompanyPlugin.Instance.AddLog($"Enable SkyBox.");
+                                    }
+
+                                    //var cont = rootObj.transform.Find("ItemShipAnimContainer");
+                                    //cont.localPosition = new Vector3(11.49f, 0.49f, -89.03f);
+
+                                    break;
+                                }
+                            case "CompanyMonstersAnims":
+                                {
+                                    var bezierCurve = rootObj.transform.Find("TentacleAnimContainer/GrossTentacle/BezierCurve");
+                                    //var collider = rootObj.transform.Find("TentacleAnimContainer/GrossTentacle/Armature/Bone/Bone.001/Bone.002/Bone.003/Collider (2)");
+                                    bezierCurve.GetComponent<SkinnedMeshRenderer>().enabled = false;
+
+                                    TouhouCompanyPlugin.Instance.AddLog($"Disable Tentacle.");
+
+                                    break;
+                                }
+                            case "Cube":
+                                Object.Destroy(rootObj);
+                                TouhouCompanyPlugin.Instance.AddLog($"Destroy Cube.");
+                                break;
+                            case "DepositCounter":
+                                Object.Destroy(rootObj.transform.Find("SpeakerBox").gameObject);
+                                Object.Destroy(rootObj.transform.Find("TinyCamera (1)").gameObject);
+                                var DoorAndHookAnim = rootObj.transform.Find("DoorAndHookAnim");
+                                //DoorAndHookAnim.GetComponent<BoxCollider>().isTrigger = true;
+                                DoorAndHookAnim.GetComponent<BoxCollider>().enabled = false;
+                                var InteractCube = DoorAndHookAnim.Find("InteractCube");
+                                InteractCube.localPosition = new Vector3(53.1024f, -8.5f, 21.4483f);
+                                InteractCube.localScale = new Vector3(1.1f, 1.67f, 0.82f);
+                                var trigger = InteractCube.GetComponent<InteractTrigger>();
+                                trigger.hoverTip = "Donate item : [LMB]";
+                                var giantHook = rootObj.transform.Find("DoorAndHookAnim/GiantHook");
+                                giantHook.localPosition = new Vector3(giantHook.localPosition.x, giantHook.localPosition.y, 19.5f);
+                                //var light = rootObj.transform.Find("Light/Spot Light (1)");
+                                //light.localPosition = new Vector3(light.localPosition.x, -0.3f, -0.3f);
+                                TouhouCompanyPlugin.Instance.AddLog($"Disable DepositCounter.");
+                                break;
+                            case "Plane":
+                                rootObj.transform.GetComponent<MeshRenderer>().enabled = false;
+                                rootObj.transform.GetComponent<MeshCollider>().isTrigger = true;
+                                TouhouCompanyPlugin.Instance.AddLog($"Disable Plane.");
+                                break;
+                            case "Environment":
+                                {
+                                    var lightContainer = rootObj.transform.Find("LightsContainer");
+                                    foreach (Transform item in lightContainer)
+                                    {
+                                        if (item.name is "LEDHangingLight (2)" or "LEDHangingLight (3)" or "LEDHangingLight (4)")
+                                        {
+                                            Object.Destroy(item.gameObject);
+                                        }
+                                    }
+                                    TouhouCompanyPlugin.Instance.AddLog($"Disable HangingLights.");
+
+                                    var containers = rootObj.transform.Find("Map/ShippingContainers");
+                                    foreach (Transform item in containers)
+                                    {
+                                        if (item.name is "ShippingContainer" or "ShippingContainer (1)" or "ShippingContainer (3)" or "ShippingContainer (4)")
+                                        {
+                                            Object.Destroy(item.gameObject);
+                                        }
+                                    }
+                                    TouhouCompanyPlugin.Instance.AddLog($"Disable ShippingContainers.");
+
+                                    TouhouCompanyPlugin.Instance.AddLog($"Instantiating Shrine...");
+                                    var cube = rootObj.transform.Find("Map/CompanyPlanet/Cube.003");
+                                    cube.GetComponent<MeshRenderer>().enabled = false;
+                                    cube.GetComponent<MeshCollider>().enabled = false;
+                                    var hakureiVisual = Object.Instantiate(TouhouCompanyPlugin.HakureiVisuals);
+                                    hakureiVisual.transform.SetParent(cube);
+                                    hakureiVisual.transform.localPosition = Vector3.zero;
+                                    hakureiVisual.transform.localRotation = Quaternion.identity;
+                                    hakureiVisual.transform.localScale = Vector3.one;
+                                    TouhouCompanyPlugin.Instance.AddLog($"Enable HakureiShrine.");
+
+                                    bellTrigger = hakureiVisual.transform.Find("HakureiShrine/铃/BellTrigger");
+
+                                    var colliders = cube.Find("Colliders");
+                                    foreach (Transform item in colliders)
+                                    {
+                                        if (item.name != "Cube" && item.name != "Cube (1)" && item.name != "Cube (4)")
+                                        {
+                                            Object.Destroy(item.gameObject);
+                                        }
+                                    }
+                                    TouhouCompanyPlugin.Instance.AddLog($"Disable Colliders.");
+
+                                    break;
+                                }
+                            case "BellDinger":
+                                var Trigger = rootObj.transform.Find("Trigger");
+                                Trigger.GetComponent<BoxCollider>().isTrigger = true;
+                                rootObj.transform.Find("BellDingerAnimContainer/BellTop").GetComponent<MeshRenderer>().enabled = false;
+                                rootObj.transform.Find("BellDingerAnimContainer/Stand").GetComponent<MeshRenderer>().enabled = false;
+
+                                if (bellTrigger != null)
+                                {
+                                    Trigger.SetParent(bellTrigger.parent);
+                                    Trigger.localPosition = bellTrigger.localPosition;
+                                    Trigger.localRotation = bellTrigger.localRotation;
+                                    Trigger.localScale = bellTrigger.localScale;
+                                    var oldAnimTrigger = Trigger.GetComponent<AnimatedObjectTrigger>();
+                                    var newAnimTrigger = bellTrigger.GetComponent<AnimatedObjectTrigger>();
+                                    oldAnimTrigger.triggerAnimator = newAnimTrigger.triggerAnimator;
+                                    oldAnimTrigger.boolFalseAudios = newAnimTrigger.boolFalseAudios;
+                                    TouhouCompanyPlugin.Instance.AddLog($"BellTrigger changed.");
+                                }
+                                TouhouCompanyPlugin.Instance.AddLog($"Disable Bell.");
+                                break;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    TouhouCompanyPlugin.Instance.AddLog($"An error occured when replacing the CompanyBuilding: {e}");
+                }
+
+            if (__instance.currentLevel.levelID == 4 && TouhouCompanyPlugin.EnableKoumakanReplace.Value &&
+                TouhouCompanyPlugin.KoumakanVisuals != null) try
+                {
+                    var sceneByName = SceneManager.GetSceneByName("Level4March");
+                    var rootGameObjects = sceneByName.GetRootGameObjects();
+
+                    Transform bellTrigger = null;
+
+                    foreach (var rootObj in rootGameObjects)
+                    {
+                        TouhouCompanyPlugin.Instance.AddLog($"Processing {rootObj.name} on {sceneByName}.");
+                        switch (rootObj.name)
+                        {
+                            case "Environment":
+                                {
+                                    var roofDome = rootObj.transform.Find("Map/RoofDome");
+                                    roofDome.GetComponent<MeshRenderer>().enabled = false;
+                                    roofDome.GetComponent<MeshCollider>().enabled = false;
+                                    var koumakanVisual = Object.Instantiate(TouhouCompanyPlugin.KoumakanVisuals);
+                                    koumakanVisual.transform.SetParent(roofDome);
+                                    koumakanVisual.transform.localPosition = Vector3.zero;
+                                    koumakanVisual.transform.localRotation = Quaternion.identity;
+                                    koumakanVisual.transform.localScale = Vector3.one;
+
+                                    TouhouCompanyPlugin.Instance.AddLog($"Enable Koumakan.");
+
+                                    var hangingLight13 = rootObj.transform.Find("HangingLight (13)");
+                                    var hangingLight14 = rootObj.transform.Find("HangingLight (14)");
+                                    Object.Destroy(hangingLight13.gameObject);
+                                    Object.Destroy(hangingLight14.gameObject);
+                                    TouhouCompanyPlugin.Instance.AddLog($"Disable HangingLights.");
+                                    var steelDoorFake = rootObj.transform.Find("SteelDoorFake");
+                                    var steelDoorFake1 = rootObj.transform.Find("SteelDoorFake (1)");
+                                    Object.Destroy(steelDoorFake.gameObject);
+                                    Object.Destroy(steelDoorFake1.gameObject);
+                                    TouhouCompanyPlugin.Instance.AddLog($"Disable SteelDoorFake.");
+
+                                    break;
+                                }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    TouhouCompanyPlugin.Instance.AddLog($"An error occured when replacing the CompanyBuilding: {e}");
+                }
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(DepositItemsDesk), "Attack")]
+        public static void AngryMeshFix(DepositItemsDesk __instance)
+        {
+            if (!TouhouCompanyPlugin.EnableHakureiReplace.Value || TouhouCompanyPlugin.HakureiVisuals == null) return;
 
             try
             {
                 var sceneByName = SceneManager.GetSceneByName("CompanyBuilding");
                 var rootGameObjects = sceneByName.GetRootGameObjects();
 
-                Transform bellTrigger = null;
-
                 foreach (var rootObj in rootGameObjects)
                 {
                     TouhouCompanyPlugin.Instance.AddLog($"Processing {rootObj.name}.");
                     switch (rootObj.name)
                     {
-                        case "Systems":
+                        case "CompanyMonstersAnims":
                             {
-                                if (TouhouCompanyPlugin.EnableSkyBoxReplace.Value && TouhouCompanyPlugin.SkyBoxVisuals != null)
-                                {
-                                    var renderingObject = rootObj.transform.Find("Rendering");
-                                    var skyBox = Object.Instantiate(TouhouCompanyPlugin.SkyBoxVisuals, renderingObject);
-                                    skyBox.transform.SetParent(renderingObject);
-                                    skyBox.transform.localPosition = Vector3.zero;
-                                    skyBox.transform.localRotation = Quaternion.identity;
-                                    skyBox.transform.localScale = Vector3.one * 0.5f;
-                                    TouhouCompanyPlugin.Instance.AddLog($"Enable SkyBox.");
-                                }
+                                var bezierCurve = rootObj.transform.Find("TentacleAnimContainer/GrossTentacle/BezierCurve");
+                                //var collider = rootObj.transform.Find("TentacleAnimContainer/GrossTentacle/Armature/Bone/Bone.001/Bone.002/Bone.003/Collider (2)");
+                                bezierCurve.GetComponent<SkinnedMeshRenderer>().enabled = true;
 
-                                //var cont = rootObj.transform.Find("ItemShipAnimContainer");
-                                //cont.localPosition = new Vector3(11.49f, 0.49f, -89.03f);
+                                TouhouCompanyPlugin.Instance.AddLog($"Enable Tentacle.");
 
                                 break;
                             }
-                        case "Cube":
-                            rootObj.transform.GetComponent<MeshRenderer>().enabled = false;
-                            rootObj.transform.GetComponent<BoxCollider>().enabled = false;
-                            TouhouCompanyPlugin.Instance.AddLog($"Disable Cube.");
-                            break;
-                        case "DepositCounter":
-                            rootObj.transform.Find("SpeakerBox").GetComponent<MeshRenderer>().enabled = false;
-                            rootObj.transform.Find("TinyCamera (1)").GetComponent<MeshRenderer>().enabled = false;
-                            var DoorAndHookAnim = rootObj.transform.Find("DoorAndHookAnim");
-                            DoorAndHookAnim.GetComponent<BoxCollider>().isTrigger = true;
-                            var InteractCube = DoorAndHookAnim.Find("InteractCube");
-                            InteractCube.localPosition = new Vector3(53.1024f, -8.5f, 21.4483f);
-                            InteractCube.localScale = new Vector3(1.1f, 1.67f, 0.82f);
-                            var trigger = InteractCube.GetComponent<InteractTrigger>();
-                            trigger.hoverTip = "Donate item : [LMB]";
-                            var giantHook = rootObj.transform.Find("DoorAndHookAnim/GiantHook");
-                            giantHook.localPosition = new Vector3(giantHook.localPosition.x, giantHook.localPosition.y, 19.5f);
-                            //var light = rootObj.transform.Find("Light/Spot Light (1)");
-                            //light.localPosition = new Vector3(light.localPosition.x, -0.3f, -0.3f);
-                            TouhouCompanyPlugin.Instance.AddLog($"Disable DepositCounter.");
-                            break;
-                        case "Plane":
-                            rootObj.transform.GetComponent<MeshRenderer>().enabled = false;
-                            rootObj.transform.GetComponent<MeshCollider>().isTrigger = true;
-                            TouhouCompanyPlugin.Instance.AddLog($"Disable Plane.");
-                            break;
-                        case "Environment":
-                            {
-                                var lightContainer = rootObj.transform.Find("LightsContainer");
-                                foreach (Transform item in lightContainer)
-                                {
-                                    if (item.name is "LEDHangingLight (2)" or "LEDHangingLight (3)" or "LEDHangingLight (4)")
-                                    {
-                                        item.GetComponent<MeshRenderer>().enabled = false;
-                                    }
-                                }
-                                TouhouCompanyPlugin.Instance.AddLog($"Disable HangingLights.");
-
-                                var containers = rootObj.transform.Find("Map/ShippingContainers");
-                                foreach (Transform item in containers)
-                                {
-                                    if (item.name is "ShippingContainer" or "ShippingContainer (1)" or "ShippingContainer (3)" or "ShippingContainer (4)")
-                                    {
-                                        Object.Destroy(item.gameObject);
-                                    }
-                                }
-                                TouhouCompanyPlugin.Instance.AddLog($"Disable ShippingContainers.");
-
-                                TouhouCompanyPlugin.Instance.AddLog($"Instantiating Shrine...");
-                                var cube = rootObj.transform.Find("Map/CompanyPlanet/Cube.003");
-                                cube.GetComponent<MeshRenderer>().enabled = false;
-                                cube.GetComponent<MeshCollider>().enabled = false;
-                                var hakureiVisual = Object.Instantiate(TouhouCompanyPlugin.HakureiVisuals);
-                                hakureiVisual.transform.SetParent(cube);
-                                hakureiVisual.transform.localPosition = Vector3.zero;
-                                hakureiVisual.transform.localRotation = Quaternion.identity;
-                                hakureiVisual.transform.localScale = Vector3.one;
-                                TouhouCompanyPlugin.Instance.AddLog($"Enable HakureiShrine.");
-
-                                bellTrigger = hakureiVisual.transform.Find("HakureiShrine/铃/BellTrigger");
-
-                                var colliders = cube.Find("Colliders");
-                                foreach (Transform item in colliders)
-                                {
-                                    if (item.name != "Cube" && item.name != "Cube (1)" && item.name != "Cube (4)")
-                                    {
-                                        Object.Destroy(item.gameObject);
-                                    }
-                                }
-                                TouhouCompanyPlugin.Instance.AddLog($"Disable Colliders.");
-
-                                break;
-                            }
-                        case "BellDinger":
-                            var Trigger = rootObj.transform.Find("Trigger");
-                            Trigger.GetComponent<BoxCollider>().isTrigger = true;
-                            rootObj.transform.Find("BellDingerAnimContainer/BellTop").GetComponent<MeshRenderer>().enabled = false;
-                            rootObj.transform.Find("BellDingerAnimContainer/Stand").GetComponent<MeshRenderer>().enabled = false;
-
-                            if (bellTrigger != null)
-                            {
-                                Trigger.SetParent(bellTrigger.parent);
-                                Trigger.localPosition = bellTrigger.localPosition;
-                                Trigger.localRotation = bellTrigger.localRotation;
-                                Trigger.localScale = bellTrigger.localScale;
-                                var oldAnimTrigger = Trigger.GetComponent<AnimatedObjectTrigger>();
-                                var newAnimTrigger = bellTrigger.GetComponent<AnimatedObjectTrigger>();
-                                oldAnimTrigger.triggerAnimator = newAnimTrigger.triggerAnimator;
-                                oldAnimTrigger.boolFalseAudios = newAnimTrigger.boolFalseAudios;
-                                TouhouCompanyPlugin.Instance.AddLog($"BellTrigger changed.");
-                            }
-                            TouhouCompanyPlugin.Instance.AddLog($"Disable Bell.");
-                            break;
                     }
                 }
             }
             catch (Exception e)
             {
-                TouhouCompanyPlugin.Instance.AddLog($"An error occured when replacing the CompanyBuilding: {e}");
+                TouhouCompanyPlugin.Instance.AddLog($"An error occured when enable CompanyMonster: {e}");
             }
         }
     }
