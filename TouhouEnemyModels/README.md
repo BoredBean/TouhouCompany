@@ -81,6 +81,6 @@ His great work: [ChineseBrideAndNewYearGhostgirl](https://thunderstore.io/c/leth
 All rights reserved by their original owner. The modified assets will **not** be made public unless **made by myself** or **being permitted**.
 
 ## Contact
-* https://github.com/BoredBean/TouhouCompany
-* https://space.bilibili.com/16119669
-* https://steamcommunity.com/id/bean_10086/
+* [GitHub](https://github.com/BoredBean/TouhouCompany)
+* [BiliBili](https://space.bilibili.com/16119669)
+* [Steam](https://steamcommunity.com/id/bean_10086)

@@ -4,6 +4,6 @@ namespace TouhouCompany
     {
         public const string PLUGIN_GUID = "com.bean.TouhouCompany";
         public const string PLUGIN_NAME = "TouhouCompany";
-        public const string PLUGIN_VERSION = "0.0.1";
+        public const string PLUGIN_VERSION = "0.0.2";
     }
 }

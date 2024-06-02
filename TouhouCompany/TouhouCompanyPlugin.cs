@@ -1,11 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
-using Jotunn.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -16,27 +13,29 @@ namespace TouhouCompany
     {
         public static TouhouCompanyPlugin Instance;
 
-        public static GameObject YukuriVisuals;
+        public static GameObject YukuriPrefeb;
         public static AudioClip YukuriAudio;
         internal static ConfigEntry<bool> EnableYukuriReplace;
         internal static ConfigEntry<bool> EnableYukuriAudio;
         internal static ConfigEntry<float> YukuriAudioVolume;
 
-        public static GameObject ShanghaiVisuals;
+        public static GameObject ShanghaiPrefeb;
         internal static ConfigEntry<bool> EnableShanghaiReplace;
 
-        public static GameObject MoriyaVisuals;
+        public static GameObject MoriyaShrinePrefeb;
         public static AudioClip NitoriTheme;
         internal static ConfigEntry<bool> EnableMoriyaReplace;
         internal static ConfigEntry<bool> EnableNitoriTheme;
         internal static ConfigEntry<float> NitoriThemeVolume;
 
-        public static GameObject HakureiVisuals;
+        public static GameObject HakureiShrinePrefeb;
+        public static GameObject NewspaperPrefeb;
+        public static GameObject NotePrefeb;
         internal static ConfigEntry<bool> EnableHakureiReplace;
-        public static GameObject SkyBoxVisuals;
+        public static GameObject SkyBoxPrefeb;
         internal static ConfigEntry<bool> EnableSkyBoxReplace;
 
-        public static GameObject KoumakanVisuals;
+        public static GameObject KoumakanPrefeb;
         internal static ConfigEntry<bool> EnableKoumakanReplace;
 
         private void Awake()
@@ -76,6 +75,7 @@ namespace TouhouCompany
 
             Logger.LogInfo("Patching all functions.");
 
+            NetcodeWeaver();
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
 
             Logger.LogInfo("All systems ready, begin loading assets.");
@@ -92,8 +92,8 @@ namespace TouhouCompany
 
                 if (EnableYukuriReplace.Value)
                 {
-                    YukuriVisuals = bundle.LoadAsset<GameObject>("YukuriUnlockableContainer.prefab");
-                    Logger.LogInfo($"Load Yukuri: {YukuriVisuals != null}");
+                    YukuriPrefeb = bundle.LoadAsset<GameObject>("YukuriUnlockableContainer.prefab");
+                    Logger.LogInfo($"Load Yukuri: {YukuriPrefeb != null}");
 
                     if (EnableYukuriAudio.Value)
                     {
@@ -104,14 +104,14 @@ namespace TouhouCompany
 
                 if (EnableShanghaiReplace.Value)
                 {
-                    ShanghaiVisuals = bundle.LoadAsset<GameObject>("上海人形Container.prefab");
-                    Logger.LogInfo($"Load Shanghai: {ShanghaiVisuals != null}");
+                    ShanghaiPrefeb = bundle.LoadAsset<GameObject>("上海人形Container.prefab");
+                    Logger.LogInfo($"Load Shanghai: {ShanghaiPrefeb != null}");
                 }
 
                 if (EnableMoriyaReplace.Value)
                 {
-                    MoriyaVisuals = bundle.LoadAsset<GameObject>("守矢.prefab");
-                    Logger.LogInfo($"Load Moriya: {MoriyaVisuals != null}");
+                    MoriyaShrinePrefeb = bundle.LoadAsset<GameObject>("守矢.prefab");
+                    Logger.LogInfo($"Load Moriya: {MoriyaShrinePrefeb != null}");
 
                     if (EnableNitoriTheme.Value)
                     {
@@ -122,19 +122,24 @@ namespace TouhouCompany
 
                 if (EnableHakureiReplace.Value)
                 {
-                    HakureiVisuals = bundle.LoadAsset<GameObject>("Shrine.prefab");
-                    Logger.LogInfo($"Load Hakurei: {HakureiVisuals != null}");
+                    HakureiShrinePrefeb = bundle.LoadAsset<GameObject>("Shrine.prefab");
+                    HakureiShrinePrefeb.AddComponent<ShrineBuilding>();
+                    NewspaperPrefeb = bundle.LoadAsset<GameObject>("Newspaper.prefab");
+                    NotePrefeb = bundle.LoadAsset<GameObject>("Note.prefab");
+                    Logger.LogInfo($"Load Hakurei: {HakureiShrinePrefeb != null}, " +
+                        $"Newspaper: {NewspaperPrefeb != null}, " +
+                        $"Note: {NotePrefeb != null}");
                     if (EnableSkyBoxReplace.Value)
                     {
-                        SkyBoxVisuals = bundle.LoadAsset<GameObject>("SkyBox.prefab");
-                        Logger.LogInfo($"Load SkyBox: {SkyBoxVisuals != null}");
+                        SkyBoxPrefeb = bundle.LoadAsset<GameObject>("SkyBox.prefab");
+                        Logger.LogInfo($"Load SkyBox: {SkyBoxPrefeb != null}");
                     }
                 }
 
                 if (EnableKoumakanReplace.Value)
                 {
-                    KoumakanVisuals = bundle.LoadAsset<GameObject>("Koumakan.prefab");
-                    Logger.LogInfo($"Load Koumakan: {KoumakanVisuals != null}");
+                    KoumakanPrefeb = bundle.LoadAsset<GameObject>("Koumakan.prefab");
+                    Logger.LogInfo($"Load Koumakan: {KoumakanPrefeb != null}");
                 }
             }
             catch (Exception ex)
@@ -158,6 +163,18 @@ namespace TouhouCompany
         public void AddLog(string info)
         {
             Logger.LogInfo(info);
+        }
+
+        private static void NetcodeWeaver()
+        {
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                foreach (MethodInfo method in type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static))
+                {
+                    if (method.GetCustomAttributes(typeof(RuntimeInitializeOnLoadMethodAttribute), false).Length != 0)
+                        method.Invoke(null, null);
+                }
+            }
         }
     }
 }

@@ -9,6 +9,8 @@ Original work: **東方Project** by **上海アリス幻樂団**
 * Replaces the **itemShip** to **守矢分社**.
 * Replaces the **CompanyBuilding** to **博丽神社**.
 * Replaces the **MarchBuilding** to **红魔馆**.
+
+
 ![Snipaste_2024-05-01_19-16-55](https://github.com/BoredBean/TouhouCompany/assets/18239170/9355d0de-1f96-402d-8316-b9e0c1100536)
 
 ## Issues
@@ -29,12 +31,13 @@ More credits see [TouhouPlayerModels](https://github.com/BoredBean/TouhouCompany
 * The sound of shrine suzu is got from [PocketSound](https://pocket-se.info/archives/tag/%e9%88%b4/)
 * The model of 守矢の分社 is made by youkan: [守矢の分社](https://bowlroll.net/file/3339)
 * The model of skydome is made by 額田倫太郎・猫々: [額田倫太郎・猫々](http://www.nicovideo.jp/mylist/29859184)
+* The model of 聖輦船 made by Anon: [東方星蓮船の聖輦船ステージ](https://bowlroll.net/file/312149)
 
 (Hope I didn't forget anyone.)
 
 All rights reserved by their original owner. The modified assets will **not** be made public unless **made by myself** or **being permitted**.
 
 ## Contact
-* https://github.com/BoredBean/TouhouCompany
-* https://space.bilibili.com/16119669
-* https://steamcommunity.com/id/bean_10086/
+* [GitHub](https://github.com/BoredBean/TouhouCompany)
+* [BiliBili](https://space.bilibili.com/16119669)
+* [Steam](https://steamcommunity.com/id/bean_10086)

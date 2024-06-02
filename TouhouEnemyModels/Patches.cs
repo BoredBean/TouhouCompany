@@ -74,7 +74,7 @@ namespace TouhouEnemyModels
                             springManModel.Find("ScanNode").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "Coilbanki";
                             var springManMetaRig = springManModel.Find("AnimContainer").Find("metarig");
-                            if (springManMetaRig == null) return;
+                            if (springManMetaRig == null) break;
                             springManMetaRig.name = "old-metarig";
                             var sekiVisual = Object.Instantiate(TouhouEnemiesPlugin.SekiVisuals);
                             sekiVisual.transform.SetParent(ai.transform);
@@ -140,7 +140,7 @@ namespace TouhouEnemyModels
                             ai.transform.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "NutSatori";
                             var nutcrackerMetaRig = nutcrackerModel?.Find("AnimContainer").Find("metarig");
-                            if (nutcrackerMetaRig == null) return;
+                            if (nutcrackerMetaRig == null) break;
                             nutcrackerMetaRig.name = "old-metarig";
                             var satoriVisual = Object.Instantiate(TouhouEnemiesPlugin.SatoriVisuals);
                             satoriVisual.transform.SetParent(ai.transform);
@@ -202,7 +202,7 @@ namespace TouhouEnemyModels
                             ai.transform.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "SuikaGiant";
                             var forestGiantMetaRig = forestGiantModel?.Find("AnimContainer").Find("metarig");
-                            if (forestGiantMetaRig == null) return;
+                            if (forestGiantMetaRig == null) break;
                             forestGiantMetaRig.name = "old-metarig";
                             var suikaVisual = Object.Instantiate(TouhouEnemiesPlugin.SuikaVisuals);
                             suikaVisual.transform.SetParent(ai.transform);
@@ -280,7 +280,7 @@ namespace TouhouEnemyModels
                             if (leftWing != null) leftWing.enabled = false;
                             if (rightWing != null) rightWing.enabled = false;
                             var hoarderBugArmature = hoarderBugModel?.Find("AnimContainer").Find("Armature");
-                            if (hoarderBugArmature == null) return;
+                            if (hoarderBugArmature == null) break;
                             hoarderBugArmature.name = "old-Armature";
 
                             var bugSpawn = Random.Range(0, 10);
@@ -379,7 +379,7 @@ namespace TouhouEnemyModels
                             var renderer = meshContainer?.Find("Renderer")?.GetComponent<SkinnedMeshRenderer>();
                             if (renderer != null) renderer.enabled = false;
                             var sandWormBone = meshContainer?.Find("Armature").Find("Bone");
-                            if (sandWormBone == null) return;
+                            if (sandWormBone == null) break;
                             sandWormBone.name = "old-Bone";
                             var yuyukoVisual = Object.Instantiate(TouhouEnemiesPlugin.YuyukoVisuals);
                             yuyukoVisual.transform.SetParent(ai.transform);
@@ -576,12 +576,14 @@ namespace TouhouEnemyModels
         public static void SuikaEat(ForestGiantAI __instance)
         {
             __instance.creatureSFX.Pause();
-            if (!TouhouEnemiesPlugin.EnableForestGiantReplace.Value || !TouhouEnemiesPlugin.EnableSuikaVoice.Value ||
-                TouhouEnemiesPlugin.SuikaAudios[3] == null || TouhouEnemiesPlugin.SoundToolGood) return;
-            __instance.creatureVoice.PlayOneShot(TouhouEnemiesPlugin.SuikaAudios[3],
+            if (TouhouEnemiesPlugin.EnableForestGiantReplace.Value && TouhouEnemiesPlugin.EnableSuikaVoice.Value &&
+                TouhouEnemiesPlugin.SuikaAudios[3] != null && !TouhouEnemiesPlugin.SoundToolGood)
+            {
+                __instance.creatureVoice.PlayOneShot(TouhouEnemiesPlugin.SuikaAudios[3],
                 TouhouEnemiesPlugin.SuikaVoiceVolume.Value);
-            WalkieTalkie.TransmitOneShotAudio(__instance.creatureVoice, TouhouEnemiesPlugin.SuikaAudios[3],
-                TouhouEnemiesPlugin.SuikaVoiceVolume.Value / 2);
+                WalkieTalkie.TransmitOneShotAudio(__instance.creatureVoice, TouhouEnemiesPlugin.SuikaAudios[3],
+                    TouhouEnemiesPlugin.SuikaVoiceVolume.Value / 2);
+            }
         }
 
         [HarmonyPatch(typeof(ForestGiantAI), "KillEnemy")]
@@ -589,28 +591,30 @@ namespace TouhouEnemyModels
         public static void SuikaLost(ForestGiantAI __instance)
         {
             __instance.creatureSFX.Stop();
-            if (!TouhouEnemiesPlugin.EnableForestGiantReplace.Value) return;
-            if (TouhouEnemiesPlugin.SuikaVisuals != null)
+            if (TouhouEnemiesPlugin.EnableForestGiantReplace.Value)
             {
-                var suikaMeshRenderer = __instance.transform.Find("SuikaGiant(Clone)/FGiantModelContainer/BodyLOD0")
-                    .GetComponent<SkinnedMeshRenderer>();
-                suikaMeshRenderer.SetBlendShapeWeight(3, 100);
-                suikaMeshRenderer.SetBlendShapeWeight(5, 100);
-                TouhouEnemiesPlugin.Instance.AddLog($"Suika lost.");
-            }
+                if (TouhouEnemiesPlugin.SuikaVisuals != null)
+                {
+                    var suikaMeshRenderer = __instance.transform.Find("SuikaGiant(Clone)/FGiantModelContainer/BodyLOD0")
+                        .GetComponent<SkinnedMeshRenderer>();
+                    suikaMeshRenderer.SetBlendShapeWeight(3, 100);
+                    suikaMeshRenderer.SetBlendShapeWeight(5, 100);
+                    TouhouEnemiesPlugin.Instance.AddLog($"Suika lost.");
+                }
 
-            if (TouhouEnemiesPlugin.EnableSuikaVoice.Value && TouhouEnemiesPlugin.SuikaAudios[1] != null &&
-                __instance.giantCry != TouhouEnemiesPlugin.SuikaAudios[1])
-            {
-                __instance.giantCry = TouhouEnemiesPlugin.SuikaAudios[1];
-            }
+                if (TouhouEnemiesPlugin.EnableSuikaVoice.Value && TouhouEnemiesPlugin.SuikaAudios[1] != null &&
+                    __instance.giantCry != TouhouEnemiesPlugin.SuikaAudios[1])
+                {
+                    __instance.giantCry = TouhouEnemiesPlugin.SuikaAudios[1];
+                }
 
-            if (TouhouEnemiesPlugin.EnableDeathAudio.Value && TouhouEnemiesPlugin.LostAudio != null)
-            {
-                __instance.creatureSFX.PlayOneShot(TouhouEnemiesPlugin.LostAudio,
-                    TouhouEnemiesPlugin.DeathAudioVolume.Value);
-                WalkieTalkie.TransmitOneShotAudio(__instance.creatureSFX, TouhouEnemiesPlugin.LostAudio,
-                    TouhouEnemiesPlugin.DeathAudioVolume.Value / 2);
+                if (TouhouEnemiesPlugin.EnableDeathAudio.Value && TouhouEnemiesPlugin.LostAudio != null)
+                {
+                    __instance.creatureSFX.PlayOneShot(TouhouEnemiesPlugin.LostAudio,
+                        TouhouEnemiesPlugin.DeathAudioVolume.Value);
+                    WalkieTalkie.TransmitOneShotAudio(__instance.creatureSFX, TouhouEnemiesPlugin.LostAudio,
+                        TouhouEnemiesPlugin.DeathAudioVolume.Value / 2);
+                }
             }
         }
 
@@ -783,7 +787,7 @@ namespace TouhouEnemyModels
                         try
                         {
                             var radMechMesh = ai.transform.Find("MeshContainer");
-                            if(radMechMesh == null) return;
+                            if(radMechMesh == null) break;
                             var radMechAnimator = ai.GetComponentInChildren<Animator>();
                             var originalController = radMechAnimator.runtimeAnimatorController;
 
@@ -791,7 +795,7 @@ namespace TouhouEnemyModels
                             radMechMesh.Find("ScanNode (1)").gameObject.GetComponent<ScanNodeProperties>().headerText =
                                 "OldUtsuho";
                             var radMechMetaRig = radMechMesh.Find("AnimContainer").Find("metarig");
-                            if (radMechMetaRig == null) return;
+                            if (radMechMetaRig == null) break;
                             radMechMetaRig.name = "old-metarig";
 
                             var utsuhoVisual = Object.Instantiate(TouhouEnemiesPlugin.UtsuhoVisuals);
@@ -940,11 +944,11 @@ namespace TouhouEnemyModels
 
 
                             if (!TouhouEnemiesPlugin.EnableUtsuhoTheme.Value ||
-                                TouhouEnemiesPlugin.UtsuhoTheme == null) return;
-                            ai.LocalLRADAudio.clip = TouhouEnemiesPlugin.UtsuhoTheme;
-                            ai.creatureSFX.volume = TouhouEnemiesPlugin.UtsuhoSFXVolume.Value;
-                            TouhouEnemiesPlugin.Instance.AddLog($"Utsuho theme Loaded.");
-                        }
+                                TouhouEnemiesPlugin.UtsuhoTheme == null) break;
+                                ai.LocalLRADAudio.clip = TouhouEnemiesPlugin.UtsuhoTheme;
+                                ai.creatureSFX.volume = TouhouEnemiesPlugin.UtsuhoSFXVolume.Value;
+                                TouhouEnemiesPlugin.Instance.AddLog($"Utsuho theme Loaded.");
+                            }
                         catch
                         {
                             TouhouEnemiesPlugin.Instance.AddLog($"Failed to replace RadMech.");
@@ -952,7 +956,7 @@ namespace TouhouEnemyModels
 
                         break;
                     case ButlerEnemyAI ai:
-                        return;
+                        break;
                 }
             }
             catch
