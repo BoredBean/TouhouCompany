@@ -38,3 +38,5 @@
 2. Fixed Utsuho animations.
 * Note1: Old-Bird **stops moving** after a player is **grabbed** by Old-Bird but **not killed**. This **can be fixed** with a single **touch** to the Old-Bird from a player. **Not caused by this mod.**
 * Note2: The missiles launched by **Utsuho** had 30%-50% of the **hit rate** of Old-Birds. This can be fixed, but it makes sense considering that Utsuho is not very smart. It also makes life easier.
+### Release v0.9.7
+1. This should fix an issue that prevents enemies from spawning.

@@ -296,6 +296,7 @@ namespace TouhouEnemyModels
                                 var marisaAnimator =
                                     marisaVisual.transform.Find("HoarderBugModel").GetComponent<Animator>();
                                 ai.creatureAnimator = marisaAnimator;
+                                TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
 
                                 marisaVisual.transform.SetParent(ai.transform);
                                 marisaVisual.transform.localPosition = Vector3.zero;
@@ -321,8 +322,6 @@ namespace TouhouEnemyModels
                                 ai.grabTarget.localPosition = grabTarget.localPosition;
 
                                 TouhouEnemiesPlugin.Instance.AddLog($"GrabTarget: {ai.grabTarget != null}");
-
-                                TouhouEnemiesPlugin.Instance.AddLog($"The animator is replaced.");
                             }
                             else
                             {

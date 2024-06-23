@@ -1,7 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
-using Jotunn.Utils;
 using LCSoundTool;
 using System;
 using System.Collections.Generic;
