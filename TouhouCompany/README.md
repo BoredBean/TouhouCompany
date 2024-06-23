@@ -10,8 +10,10 @@ Original work: **東方Project** by **上海アリス幻樂団**
 * Replaces the **CompanyBuilding** to **博丽神社**.
 * Replaces the **MarchBuilding** to **红魔馆**.
 
-
-![Snipaste_2024-05-01_19-16-55](https://github.com/BoredBean/TouhouCompany/assets/18239170/9355d0de-1f96-402d-8316-b9e0c1100536)
+![1](https://github.com/BoredBean/TouhouCompany/assets/18239170/755bee5f-ced4-4768-ab5b-10e5ede13b45)
+![2](https://github.com/BoredBean/TouhouCompany/assets/18239170/a900c336-5e31-4625-8e1b-376586bda34e)
+![3](https://github.com/BoredBean/TouhouCompany/assets/18239170/a6a59747-4d3d-4ccf-bfb8-43b48803ebb3)
+![4](https://github.com/BoredBean/TouhouCompany/assets/18239170/96136b30-2a33-4ef6-9e02-9498ae90ae78)
 
 ## Issues
 
