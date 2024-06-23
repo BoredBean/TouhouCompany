@@ -31,7 +31,9 @@ More credits see [TouhouPlayerModels](https://github.com/BoredBean/TouhouCompany
 * The sound of shrine suzu is got from [PocketSound](https://pocket-se.info/archives/tag/%e9%88%b4/)
 * The model of 守矢の分社 is made by youkan: [守矢の分社](https://bowlroll.net/file/3339)
 * The model of skydome is made by 額田倫太郎・猫々: [額田倫太郎・猫々](http://www.nicovideo.jp/mylist/29859184)
-* The model of 聖輦船 made by Anon: [東方星蓮船の聖輦船ステージ](https://bowlroll.net/file/312149)
+* The model of 聖輦船 is made by Anon: [東方星蓮船の聖輦船ステージ](https://bowlroll.net/file/312149)
+* The model of sukima is made by zakoneko: [Yukari Yakumo (Zakoneko)](https://mikumikudance.fandom.com/wiki/Yukari_Yakumo_(Zakoneko))
+* The model of ミニ八卦炉Ver1.3 is made by 紫: [ＭＭＤ用 ミニ八卦炉モデル](https://bowlroll.net/file/54878)
 
 (Hope I didn't forget anyone.)
 

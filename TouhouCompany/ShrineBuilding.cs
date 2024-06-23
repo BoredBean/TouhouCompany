@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 #nullable enable
 namespace TouhouCompany
 {
-    internal class ShrineBuilding: NetworkBehaviour
+    internal class ShrineBuilding : NetworkBehaviour
     {
         private Fog fog;
         private float lowFogWeight = 500f;
@@ -19,22 +19,29 @@ namespace TouhouCompany
 
         private void Awake()
         {
-            Scene sceneByName = SceneManager.GetSceneByName("CompanyBuilding");
-            foreach (GameObject rootGameObject in sceneByName.GetRootGameObjects())
+            try
             {
-                if (rootGameObject.name == "Environment")
+                Scene sceneByName = SceneManager.GetSceneByName("CompanyBuilding");
+                foreach (GameObject rootGameObject in sceneByName.GetRootGameObjects())
                 {
-                    Transform transform = rootGameObject.transform.Find("Lighting/BrightDay/Sun/SunAnimContainer/Sky and Fog Global Volume");
-                    if ((bool)transform)
+                    if (rootGameObject.name == "Environment")
                     {
-                        TouhouCompanyPlugin.Instance.AddLog("Found fog gameobject, getting volume component");
-                        fog = (Fog)transform.GetComponent<Volume>().profile.components.Find(x => x.GetType() == typeof(Fog));
-                        highFogWeight = fog.meanFreePath.value;
-                        targetFogWeight = highFogWeight;
+                        Transform transform = rootGameObject.transform.Find("Lighting/BrightDay/Sun/SunAnimContainer/Sky and Fog Global Volume");
+                        if ((bool)transform)
+                        {
+                            TouhouCompanyPlugin.Instance.AddLog("Found fog gameobject, getting volume component");
+                            fog = (Fog)transform.GetComponent<Volume>().profile.components.Find(x => x.GetType() == typeof(Fog));
+                            highFogWeight = fog.meanFreePath.value;
+                            targetFogWeight = highFogWeight;
+                        }
+                        else
+                            TouhouCompanyPlugin.Instance.AddLog("Could not find fog gameobject");
                     }
-                    else
-                        TouhouCompanyPlugin.Instance.AddLog("Could not find fog gameobject");
                 }
+            }
+            catch
+            {
+                TouhouCompanyPlugin.Instance.AddLog($"Wrong scene for fog.");
             }
         }
 

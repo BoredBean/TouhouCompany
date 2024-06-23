@@ -9,3 +9,7 @@
 ### Release v0.0.2
 1. Fixed all known bugs.
 2. Sync between players.
+### Release v1.0.0
+1. Add sukima.
+2. Add cold open scene.
+3. 聖輦船 not finished.

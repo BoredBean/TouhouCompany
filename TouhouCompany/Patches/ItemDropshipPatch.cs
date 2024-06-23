@@ -38,7 +38,7 @@ namespace TouhouCompany.Patches
 
                     TouhouCompanyPlugin.Instance.AddLog($"ItemDropship model replaced.");
 
-                    if (TouhouCompanyPlugin.EnableNitoriTheme.Value && TouhouCompanyPlugin.NitoriTheme != null)
+                    if (TouhouCompanyPlugin.EnableNitoriTheme.Value && TouhouCompanyPlugin.NitoriTheme != null && TouhouCompanyPlugin.NitoriThemeFar != null)
                     {
                         var music = __instance.transform.Find("Music");
                         var source = music.GetComponent<AudioSource>();
@@ -46,7 +46,7 @@ namespace TouhouCompany.Patches
                         source.volume = TouhouCompanyPlugin.NitoriThemeVolume.Value;
                         music = music.Find("Music (1)");
                         source = music.GetComponent<AudioSource>();
-                        source.clip = TouhouCompanyPlugin.NitoriTheme;
+                        source.clip = TouhouCompanyPlugin.NitoriThemeFar;
                         source.volume = TouhouCompanyPlugin.NitoriThemeVolume.Value;
 
                         TouhouCompanyPlugin.Instance.AddLog($"NitoriTheme replaced.");

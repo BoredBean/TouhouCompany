@@ -36,6 +36,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>lib\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>lib\Unity.InputSystem.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>lib\Unity.Netcode.Runtime.dll</HintPath>
     </Reference>

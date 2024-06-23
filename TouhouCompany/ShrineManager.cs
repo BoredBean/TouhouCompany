@@ -9,8 +9,9 @@ namespace TouhouCompany
     public class ShrineManager : NetworkBehaviour
     {
         public static Dictionary<string, GameObject> Objects;
-        static GameObject newspaper;
-        static GameObject note;
+        public static GameObject newspaper;
+        public static GameObject note;
+        public static Animator sukimaAnimator;
 
         private void Awake()
         {
@@ -18,6 +19,7 @@ namespace TouhouCompany
             Objects = [];
             newspaper = null;
             note = null;
+            sukimaAnimator = null;
             DontDestroyOnLoad(gameObject);
             TouhouCompanyPlugin.Instance.AddLog("ShrineManager is awake");
         }
@@ -64,9 +66,10 @@ namespace TouhouCompany
         [ClientRpc]
         public void EnableShrineCompanyClientRpc(ulong shrineId)
         {
-            TouhouCompanyPlugin.Instance.AddLog("Running RearrangeSceneClientRpc");
+            TouhouCompanyPlugin.Instance.AddLog("Running EnableShrineCompanyClientRpc");
 
             NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(shrineId, out NetworkObject shrineObject);
+            shrineObject.transform.GetComponent<Animator>().enabled = false;
 
             Scene sceneByName = SceneManager.GetSceneByName("CompanyBuilding");
             GameObject[] rootGameObjects = sceneByName.GetRootGameObjects();
@@ -115,6 +118,8 @@ namespace TouhouCompany
                             /* DoorAndHookAnim is a NetworkObject */
                             var DoorAndHookAnim = gameObject.transform.Find("DoorAndHookAnim");
                             DoorAndHookAnim.GetComponent<BoxCollider>().isTrigger = true;
+                            var DepositCounterDoor = DoorAndHookAnim.Find("DepositCounterDoor (1)");
+                            DepositCounterDoor.GetComponent<MeshRenderer>().enabled = false;
                             var InteractCube = DoorAndHookAnim.Find("InteractCube");
                             InteractCube.localPosition = new Vector3(53.0629997f, -8.74699974f, 21.4619999f);
                             InteractCube.localScale = new Vector3(0.930000007f, 1.39999998f, 0.75f);
@@ -123,6 +128,10 @@ namespace TouhouCompany
                             //var giantHook = gameObject.transform.Find("DoorAndHookAnim/GiantHook");
                             //giantHook.localPosition = new Vector3(giantHook.localPosition.x, giantHook.localPosition.y, 19.5f);
                             /* DoorAndHookAnim is a NetworkObject */
+                            sukimaAnimator = shrineObject?.transform.Find("HakureiShrine/Armature/Book殿_Parent").GetComponent<Animator>();
+
+                            var speakerAudio = gameObject.transform.Find("Audios/SpeakerAudio").GetComponent<AudioSource>();
+                            //speakerAudio.outputAudioMixerGroup = TouhouCompanyPlugin.TuneMixer?.FindMatchingGroups($"Tune19")[0];
 
                             TouhouCompanyPlugin.Instance.AddLog($"Disable DepositCounter.");
                             break;

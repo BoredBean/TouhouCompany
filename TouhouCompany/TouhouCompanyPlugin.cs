@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace TouhouCompany
 {
@@ -24,6 +25,7 @@ namespace TouhouCompany
 
         public static GameObject MoriyaShrinePrefeb;
         public static AudioClip NitoriTheme;
+        public static AudioClip NitoriThemeFar;
         internal static ConfigEntry<bool> EnableMoriyaReplace;
         internal static ConfigEntry<bool> EnableNitoriTheme;
         internal static ConfigEntry<float> NitoriThemeVolume;
@@ -34,9 +36,13 @@ namespace TouhouCompany
         internal static ConfigEntry<bool> EnableHakureiReplace;
         public static GameObject SkyBoxPrefeb;
         internal static ConfigEntry<bool> EnableSkyBoxReplace;
+        public static AudioMixer TuneMixer;
 
         public static GameObject KoumakanPrefeb;
         internal static ConfigEntry<bool> EnableKoumakanReplace;
+
+        public static GameObject HangarShipPrefeb;
+        internal static ConfigEntry<bool> EnableHangarShipReplace;
 
         private void Awake()
         {
@@ -72,6 +78,9 @@ namespace TouhouCompany
 
             EnableKoumakanReplace = Config.Bind("5.March", "EnableKoumakanReplace", true,
                 "Replace the March Building with Koumakan.");
+
+            EnableHangarShipReplace = Config.Bind("6.HangarShip", "EnableHangarShipReplace", false,
+                "Replace the HangarShip with 圣辇船. This is not finished. Not recommend.");
 
             Logger.LogInfo("Patching all functions.");
 
@@ -116,7 +125,9 @@ namespace TouhouCompany
                     if (EnableNitoriTheme.Value)
                     {
                         NitoriTheme = bundle.LoadAsset<AudioClip>("Nitori.mp3");
-                        Logger.LogInfo($"Load NitoriTheme: {NitoriTheme != null}");
+                        NitoriThemeFar = bundle.LoadAsset<AudioClip>("NitoriFar.mp3");
+                        Logger.LogInfo($"Load NitoriTheme: {NitoriTheme != null}, " +
+                            $"NitoriThemeFar: {NitoriThemeFar != null}");
                     }
                 }
 
@@ -126,9 +137,11 @@ namespace TouhouCompany
                     HakureiShrinePrefeb.AddComponent<ShrineBuilding>();
                     NewspaperPrefeb = bundle.LoadAsset<GameObject>("Newspaper.prefab");
                     NotePrefeb = bundle.LoadAsset<GameObject>("Note.prefab");
+                    TuneMixer = bundle.LoadAsset<AudioMixer>("Tuner");
                     Logger.LogInfo($"Load Hakurei: {HakureiShrinePrefeb != null}, " +
                         $"Newspaper: {NewspaperPrefeb != null}, " +
-                        $"Note: {NotePrefeb != null}");
+                        $"Note: {NotePrefeb != null}," +
+                        $"TuneMixer: {TuneMixer != null}");
                     if (EnableSkyBoxReplace.Value)
                     {
                         SkyBoxPrefeb = bundle.LoadAsset<GameObject>("SkyBox.prefab");
@@ -140,6 +153,12 @@ namespace TouhouCompany
                 {
                     KoumakanPrefeb = bundle.LoadAsset<GameObject>("Koumakan.prefab");
                     Logger.LogInfo($"Load Koumakan: {KoumakanPrefeb != null}");
+                }
+
+                if (EnableHangarShipReplace.Value)
+                {
+                    HangarShipPrefeb = bundle.LoadAsset<GameObject>("圣辇船.prefab");
+                    Logger.LogInfo($"Load HangarShip: {HangarShipPrefeb != null}");
                 }
             }
             catch (Exception ex)

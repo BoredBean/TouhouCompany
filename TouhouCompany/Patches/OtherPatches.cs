@@ -2,16 +2,27 @@
 using HarmonyLib;
 using System;
 using System.Reflection;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 namespace TouhouCompany.Patches
 {
     [HarmonyPatch]
     internal class OtherPatches
     {
+        [HarmonyPrefix, HarmonyPatch(typeof(DepositItemsDesk), "OpenShutDoor")]
+        public static void AngryMeshFix(DepositItemsDesk __instance, bool open)
+        {
+            if (TouhouCompanyPlugin.EnableHakureiReplace.Value && TouhouCompanyPlugin.HakureiShrinePrefeb != null) try
+                {
+                    ShrineManager.sukimaAnimator?.SetBool("doorOpen", open);
+                }
+                catch (Exception e)
+                {
+                    TouhouCompanyPlugin.Instance.AddLog($"An error occured when enable Sukima: {e}");
+                }
+        }
+
         [HarmonyPrefix, HarmonyPatch(typeof(DepositItemsDesk), "Attack")]
         public static void AngryMeshFix(DepositItemsDesk __instance)
         {
@@ -54,6 +65,7 @@ namespace TouhouCompany.Patches
                                             int floorYRot,
                                             PlayerControllerB __instance)
         {
+            if (dropObject.name != "Note(Clone)" || dropObject.name != "Newspaper(Clone)") return true;
             TouhouCompanyPlugin.Instance.AddLog($"TestNoLongerHeld: {dropObject.name}.");
             for (int index = 0; index < __instance.ItemSlots.Length; ++index)
             {
