@@ -21,8 +21,8 @@ namespace TouhouCompany.Patches
         public static void StartDisconnectPatch()
         {
             TouhouCompanyPlugin.Instance.AddLog("Player disconnected.");
-            RoundManagerPatch.ShrineManager.Destroy();
-            RoundManagerPatch.KoumakanManager.Destroy();
+            RoundManagerPatch.ShrineManager?.Destroy();
+            RoundManagerPatch.KoumakanManager?.Destroy();
         }
     }
 }
