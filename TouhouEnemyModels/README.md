@@ -3,10 +3,10 @@
 ---
 **暂停开发去做更多新的尝试，如果有人愿意加入或者接手项目，我可以提供开发教程。如果存在使用问题仍然可以提Issue，我会提供维护。如有兴趣可在此项目或B站联系。感谢反馈。**
 
-**I've decided to stop updating and try some new things. I can provide tutorials if anyone wishes to join or takes over this project. I will still provide fixes for the issues. Prefer contact on Github or Steam instead of Discord. Thanks for your feedback.**
+**I've decided to stop updating and try some new things. I can provide tutorials if anyone wishes to join or take over this project. I will still offer fixes to the issues. I prefer contact on Github or Steam instead of Discord. Thanks for your feedback.**
 
 ---
-This mod replaces the model of enemies with **Touhou characters (modified)** and also adds their **theme music (shortened)**. 
+This mod replaces the model of enemies with **Touhou characters (modified)** and adds their **theme music (shortened)**. 
 
 Original work: **東方Project** by **上海アリス幻樂団**
 
@@ -29,22 +29,25 @@ Original work: **東方Project** by **上海アリス幻樂団**
 
 ![Model Picture](https://github.com/BoredBean/TouhouCompany/assets/18239170/bbfaa786-8300-47ee-b598-fb22f3c4c2ab)
 
+![image](https://github.com/BoredBean/TouhouCompany/assets/18239170/9d49a8a4-a75a-4e40-b3c9-90bfbfcc87c9)
+
+
 ## Issues
 
-1. ✅At v0.9.2, client player cannot kill HoarderBugs. **Fixed at v0.9.3.**
-2. ❌Dead enemies looks still alive for later-join players. **Not gonna fix.**
+1. ✅At v0.9.2, the client player cannot kill HoarderBugs. **Fixed at v0.9.3.**
+2. ❌Dead enemies look still alive for later-join players. **Not gonna fix.**
 3. ✅Volume configs for NutCracker and OldBird. **Fixed.**
-4. ✅Clothes and hair are solid. [JigglePhysicsPlugin](https://thunderstore.io/c/lethal-company/p/HGG/JigglePhysicsPlugin/) may helps, but not fixing at this time. **Jiggle physics added at v0.9.6.**
+4. ✅Clothes and hair are solid. **Jiggle physics added at v0.9.6.**
 5. ❌Starry texture for Utsuho's cloak. Might be fixed in the future, not sure of that.
 6. ✅The model meshes are becoming too large for a single mod. Trying to reduce the size. **Done.**
 7. ℹ️Old-Bird **stops moving** if its **target(including giants)** is eaten by a **Sandworm** while attacking. **Not caused by this mod.**
-8. ℹ️Old-Bird **stops moving** if a player is **grabbed** by Old-Bird but **not killed** by its flame. This **can be fixed** with a single **touch** to the Old-Bird from a player. **Not caused by this mod.**
+8. ℹ️Old-Bird **stops moving** if a player is **grabbed** by Old-Bird but **not killed** by its flame. This **can be fixed** with a single **touch** to the Old Bird from a player. **Not caused by this mod.**
 9. ℹ️The missiles launched by **Utsuho** had 30%-50% of the **hit rate** of Old-Birds. This can be fixed, but it **makes sense** considering that Utsuho is not very smart. It also makes life easier.
 
 
 * Others:
 
-The Blender and Unity related issues with the models are beyond my knowledge.
+The Blender and Unity-related issues with the models are beyond my knowledge.
 
 I would appreciate it if someone could help.
 
@@ -67,7 +70,7 @@ His great work: [ChineseBrideAndNewYearGhostgirl](https://thunderstore.io/c/leth
 
 * The model of Sekibanki is made by Tenkoro: [Sekibanki (Tenkoro)](https://mikumikudance.fandom.com/wiki/Sekibanki_(Tenkoro))
 * The model of Satori is partly referenced to Futeikei: [Satori Komeiji (Futeikei)](https://mikumikudance.fandom.com/wiki/Satori_Komeiji_(Futeikei))
-* NutSatori orignal artwork by 左林♂: [小5胡桃夹子](https://t.bilibili.com/880219101680631824)
+* NutSatori original artwork by 左林♂: [小5胡桃夹子](https://t.bilibili.com/880219101680631824)
 * The model of Suika is made by Zakoneko: [Suika Ibuki (Zakoneko)](https://mikumikudance.fandom.com/wiki/Suika_Ibuki_(Zakoneko))
 * The model of Marisa is made by Ki: [Marisa Kirisame (Ki)](https://mikumikudance.fandom.com/wiki/Marisa_Kirisame_(Ki))
 * KirisameBug sketched by rampa93: [hoarder bug](https://github.com/BoredBean/TouhouCompany/issues/6)
