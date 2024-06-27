@@ -43,5 +43,5 @@
 ### Release v0.9.9
 1. Volume config for NutCracker Satori.
 2. Volume config for OldBird Utsuho.
-###Release v1.0.0
+### Release v1.0.0
 1. Compatible with [MoreCounterplay](https://thunderstore.io/c/lethal-company/p/BaronDrakula/MoreCounterplay/). Now you can cut off Sekibanki's head and take it home. Chop-chop!
