@@ -10,7 +10,7 @@ This mod replaces the model of enemies with **Touhou characters (modified)** and
 
 Original work: **東方Project** by **上海アリス幻樂団**
 
-* Replaces the model of **CoilHead** to **Sekibanki (赤蛮奇)**.
+* Replaces the model of **CoilHead** to **Sekibanki (赤蛮奇)**. (Compatible with [MoreCounterplay](https://thunderstore.io/c/lethal-company/p/BaronDrakula/MoreCounterplay/))
 * The CoilHead can replace the **coil** on a player's body with **a head of Sekibanki**.
 * Replaces the model of **Nutcracker** to **Satori Komeiji (古明地觉)**.
 * Replaces the model of **ForestGiant** to **Suika Ibuki (伊吹萃香)**.
@@ -33,7 +33,7 @@ Original work: **東方Project** by **上海アリス幻樂団**
 
 1. ✅At v0.9.2, client player cannot kill HoarderBugs. **Fixed at v0.9.3.**
 2. ❌Dead enemies looks still alive for later-join players. **Not gonna fix.**
-3. ❌Volume configs for NutCracker and OldBird not working. **Not gonna fix.**
+3. ✅Volume configs for NutCracker and OldBird. **Fixed.**
 4. ✅Clothes and hair are solid. [JigglePhysicsPlugin](https://thunderstore.io/c/lethal-company/p/HGG/JigglePhysicsPlugin/) may helps, but not fixing at this time. **Jiggle physics added at v0.9.6.**
 5. ❌Starry texture for Utsuho's cloak. Might be fixed in the future, not sure of that.
 6. ✅The model meshes are becoming too large for a single mod. Trying to reduce the size. **Done.**

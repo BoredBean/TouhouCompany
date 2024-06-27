@@ -38,5 +38,10 @@
 2. Fixed Utsuho animations.
 * Note1: Old-Bird **stops moving** after a player is **grabbed** by Old-Bird but **not killed**. This **can be fixed** with a single **touch** to the Old-Bird from a player. **Not caused by this mod.**
 * Note2: The missiles launched by **Utsuho** had 30%-50% of the **hit rate** of Old-Birds. This can be fixed, but it makes sense considering that Utsuho is not very smart. It also makes life easier.
-### Release v0.9.7
+### Release v0.9.8
 1. This should fix an issue that prevents enemies from spawning.
+### Release v0.9.9
+1. Volume config for NutCracker Satori.
+2. Volume config for OldBird Utsuho.
+###Release v1.0.0
+1. Compatible with [MoreCounterplay](https://thunderstore.io/c/lethal-company/p/BaronDrakula/MoreCounterplay/). Now you can cut off Sekibanki's head and take it home. Chop-chop!

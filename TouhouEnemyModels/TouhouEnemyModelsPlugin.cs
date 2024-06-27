@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using HarmonyLib;
 using LCSoundTool;
@@ -12,11 +13,13 @@ using UnityEngine;
 namespace TouhouEnemyModels
 {
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+    [BepInDependency("BaronDrakula.MoreCounterplay", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("meow.ModelReplacementAPI", BepInDependency.DependencyFlags.HardDependency)]
     public class TouhouEnemiesPlugin : BaseUnityPlugin
     {
         public static TouhouEnemiesPlugin Instance;
         public static bool SoundToolGood = false;
+        public static bool MoreCounterplayGood = false;
 
         public static AudioClip LostAudio;
         internal static ConfigEntry<bool> EnableDeathAudio;
@@ -83,7 +86,7 @@ namespace TouhouEnemyModels
 
             EnableDeathAudio = Config.Bind("0.General", "EnableDeathAudio", false,
                 "Play a death audio when an enemy is killed.");
-            DeathAudioVolume = Config.Bind("0.General", "DeathAudioVolume(0.0-1.0)", 0.3f,
+            DeathAudioVolume = Config.Bind("0.General", "DeathAudioVolume(0.0-1.0)", 0.5f,
                 "Config the volume of the death audio.");
 
             EnableCoilHeadReplace = Config.Bind("1.CoilHead", "EnableCoilHead", true,
@@ -92,21 +95,21 @@ namespace TouhouEnemyModels
                 "Replace the coil on the dead body to a head of Sekibanki.");
             EnableSekibankiTheme = Config.Bind("1.CoilHead", "EnableSekibankiTheme", true,
                 "Replace the step audio to Sekibanki's theme music.");
-            SekibankiSFXVolume = Config.Bind("1.CoilHead", "SekibankiSoundVolume(0.0-1.0)", 0.3f,
+            SekibankiSFXVolume = Config.Bind("1.CoilHead", "SekibankiSoundVolume(0.0-1.0)", 0.5f,
                 "Config the volume of Sekibanki's sound effect including the theme music.");
 
             EnableNutcrackerReplace = Config.Bind("2.Nutcracker", "EnableNutcracker", true,
                 "Replace the model of Nutcracker to NutSatori.");
             EnableSatoriTheme = Config.Bind("2.Nutcracker", "EnableSatoriTheme", true,
                 "Replace the angry audio to Satori's theme music.");
-            SatoriSFXVolume = Config.Bind("2.Nutcracker", "SatoriSoundVolume(0.0-1.0)", 0.3f,
+            SatoriSFXVolume = Config.Bind("2.Nutcracker", "SatoriSoundVolume(0.0-1.0)", 0.5f,
                 "** THIS NOT WORK! ** Config the volume of Satori's sound effect including the theme music.");
 
             EnableForestGiantReplace = Config.Bind("3.ForestGiant", "EnableForestGiant", true,
                 "Replace the model of ForestGiant to SuikaGiant.");
             EnableSuikaTheme = Config.Bind("3.ForestGiant", "EnableSuikaTheme", true,
                 "Play Suika's theme music.");
-            SuikaThemeVolume = Config.Bind("3.ForestGiant", "SuikaThemeVolume(0.0-1.0)", 0.3f,
+            SuikaThemeVolume = Config.Bind("3.ForestGiant", "SuikaThemeVolume(0.0-1.0)", 0.5f,
                 "Config the volume of Suika's theme music.");
             EnableSuikaVoice = Config.Bind("3.ForestGiant", "EnableSuikaVoice", true,
                 "Suika has something to say.");
@@ -119,7 +122,7 @@ namespace TouhouEnemyModels
                 "How likely Marisa will be spawn as a bug. HoarderMarisa(0) -> KirisameBug(10) No Sync!");
             EnableMarisaTheme = Config.Bind("4.HoarderBug", "EnableMarisaTheme", true,
                 "Play Marisa's theme music. Not for the bug.");
-            MarisaSFXVolume = Config.Bind("4.HoarderBug", "MarisaSoundVolume(0.0-1.0)", 0.3f,
+            MarisaSFXVolume = Config.Bind("4.HoarderBug", "MarisaSoundVolume(0.0-1.0)", 0.5f,
                 "Config the volume of Marisa's sound effect including the theme music.");
             EnableMarisaVoice = Config.Bind("4.HoarderBug", "EnableMarisaVoice", true,
                 "Marisa has something to say.");
@@ -132,17 +135,20 @@ namespace TouhouEnemyModels
                 "Replace the model of RadMech to UtsuhoMech.");
             EnableUtsuhoTheme = Config.Bind("5.RadMech", "EnableUtsuhoTheme", true,
                 "Play Utsuho's theme music.");
-            UtsuhoSFXVolume = Config.Bind("5.RadMech", "UtsuhoSoundVolume(0.0-1.0)", 0.3f,
+            UtsuhoSFXVolume = Config.Bind("5.RadMech", "UtsuhoSoundVolume(0.0-1.0)", 0.5f,
                 "** THIS NOT WORK! ** Config the volume of Utsuho's sound effect including the theme music.");
 
             EnableSandWormReplace = Config.Bind("6.SandWorm", "EnableSandWorm", true,
                 "Replace the model of SandWorm to Yuyuko.");
             EnableYuyukoTheme = Config.Bind("6.SandWorm", "EnableYuyukoTheme", true,
                 "Play Yuyuko's theme music.");
-            YuyukoSFXVolume = Config.Bind("6.SandWorm", "YuyukoSoundVolume(0.0-1.0)", 0.3f,
+            YuyukoSFXVolume = Config.Bind("6.SandWorm", "YuyukoSoundVolume(0.0-1.0)", 0.5f,
                 "Config the volume of Yuyuko's sound effect including the theme music.");
 
             Logger.LogInfo("Patching all functions.");
+
+            MoreCounterplayGood = Chainloader.PluginInfos.ContainsKey("BaronDrakula.MoreCounterplay");
+            Instance.AddLog($"MoreCounterplay = {MoreCounterplayGood}");
 
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
 

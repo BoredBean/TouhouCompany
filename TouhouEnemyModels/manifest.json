@@ -1,8 +1,8 @@
 {
   "name": "TouhouEnemyModels",
-  "version_number": "0.9.8",
+  "version_number": "1.0.0",
   "website_url": "https://github.com/BoredBean/TouhouCompany",
-  "description": "[Update: Fixes] 怪物的东方人物模型与音效替换，可配置。This mod replaces the model of enemies with Touhou characters(modified) and adds their theme music(shortened). All configurable. **暂停更新，除非有合作者或者Issue** **Last version unless get collaborators or issues.**",
+  "description": "[Update: MoreCounterplay] 怪物的东方人物模型与音效替换，可配置。This mod replaces the model of enemies with Touhou characters(modified) and adds their theme music(shortened). All configurable. **暂停更新，除非有合作者或者Issue** **Last version unless get collaborators or issues.**",
    "dependencies": [        
 	"BepInEx-BepInExPack-5.4.2100",
 		"BunyaPineTree-ModelReplacementAPI-2.3.1"
