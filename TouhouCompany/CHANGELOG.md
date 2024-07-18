@@ -14,3 +14,5 @@
 2. Add cold open scene.
 3. 聖輦船 not finished.
 4. Some fixes.
+### Release v1.0.2
+1. Fix an issue that players cannot drop the note.

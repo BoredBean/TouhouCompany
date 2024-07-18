@@ -1,8 +1,8 @@
 {
   "name": "TouhouCompany",
-  "version_number": "1.0.1",
+  "version_number": "1.0.2",
   "website_url": "https://github.com/BoredBean/TouhouCompany",
-  "description": "[Update: Anime] 场景中物体的东方模型与音效替换，可配置。This mod replaces the models in the scene with Touhou relative objects and audio. All configurable. Including: CompanyBuilding=>博麗神社, MarchBuilding=>紅魔館, DropShip=>守矢の分社, PlushiePJMan=>上海人形, Jack O'Lantern=>YukkuriReimu",
+  "description": "[Update: Fix] 场景中物体的东方模型与音效替换，可配置。This mod replaces the models in the scene with Touhou relative objects and audio. All configurable. Including: CompanyBuilding=>博麗神社, MarchBuilding=>紅魔館, DropShip=>守矢の分社, PlushiePJMan=>上海人形, Jack O'Lantern=>YukkuriReimu",
   "dependencies": [
   ]
 }
