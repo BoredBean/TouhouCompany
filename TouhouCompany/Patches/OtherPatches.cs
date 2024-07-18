@@ -65,8 +65,11 @@ namespace TouhouCompany.Patches
                                             int floorYRot,
                                             PlayerControllerB __instance)
         {
-            if (dropObject.name != "Note(Clone)" || dropObject.name != "Newspaper(Clone)") return true;
             TouhouCompanyPlugin.Instance.AddLog($"TestNoLongerHeld: {dropObject.name}.");
+            if (dropObject.name != "Note(Clone)" && dropObject.name != "Newspaper(Clone)") { 
+                TouhouCompanyPlugin.Instance.AddLog($"Not processing.");
+                return true;
+            }
             for (int index = 0; index < __instance.ItemSlots.Length; ++index)
             {
                 if (__instance.ItemSlots[index] == dropObject)
