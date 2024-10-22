@@ -16,3 +16,5 @@
 4. Some fixes.
 ### Release v1.0.2
 1. Fix an issue that players cannot drop the note.
+### Release v1.0.3
+1. Fix an issue that players cannot quit the game.

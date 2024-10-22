@@ -21,8 +21,24 @@ namespace TouhouCompany.Patches
         public static void StartDisconnectPatch()
         {
             TouhouCompanyPlugin.Instance.AddLog("Player disconnected.");
-            RoundManagerPatch.ShrineManager?.Destroy();
-            RoundManagerPatch.KoumakanManager?.Destroy();
+            //if (RoundManagerPatch.ShrineManager == null)
+            //{
+            //    TouhouCompanyPlugin.Instance.AddLog("ShrineManager doesn't exist.");
+            //}
+            //else
+            //{
+            //    TouhouCompanyPlugin.Instance.AddLog("Try destroying ShrineManager.");
+            //    RoundManagerPatch.ShrineManager.Destroy();
+            //}
+            //if (RoundManagerPatch.KoumakanManager == null)
+            //{
+            //    TouhouCompanyPlugin.Instance.AddLog("KoumakanManager doesn't exist.");
+            //}
+            //else
+            //{
+            //    TouhouCompanyPlugin.Instance.AddLog("Try destroying KoumakanManager.");
+            //    RoundManagerPatch.KoumakanManager.Destroy();
+            //}
         }
     }
 }
